@@ -6,6 +6,7 @@ import { auth } from "../libs/firebase";
 import { MainRouter } from "./main.router";
 import { AuthRouter } from "./auth.router";
 import { AUTH_ROUTES } from "../core/constants/routes-names";
+import { SpinnerIndicatorsComponent } from "../core/components/indicators/spinner-indicators.component";
 
 export function RoutesNavigator() {
   const location = useLocation();
@@ -88,7 +89,7 @@ export function RoutesNavigator() {
     <div className={prefersMode}>
       <Routes>
         {isLoading ? (
-          <Route path="/*" element={<div>Loading ...</div>} />
+          <Route path="/*" element={<SpinnerIndicatorsComponent />} />
         ) : isLoggedIn ? (
           <Route path="/main/*" element={<MainRouter />} />
         ) : (
