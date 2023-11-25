@@ -5,6 +5,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../libs/firebase";
 import { MainRouter } from "./main.router";
 import { AuthRouter } from "./auth.router";
+import { AUTH_ROUTES } from "../core/constants/routes-names";
 
 export function RoutesNavigator() {
   const location = useLocation();
@@ -13,6 +14,23 @@ export function RoutesNavigator() {
   const [, setUserData] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  let prefersMode: string;
+  const theme = localStorage.getItem("theme");
+  if (theme) {
+    prefersMode =
+      theme === "dark"
+        ? "dark-theme bg-skin-fill-primary text-skin-base"
+        : "light-theme bg-skin-fill-primary text-skin-base";
+  } else {
+    const isItDarkMode =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    prefersMode = isItDarkMode
+      ? "dark-theme bg-skin-fill-primary text-skin-base"
+      : "light-theme bg-skin-fill-primary text-skin-base";
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -42,10 +60,10 @@ export function RoutesNavigator() {
     localStorage.setItem("params", JSON.stringify({ mode, oobCode }));
 
   const authRoutes = [
-    "/auth/login",
-    "/auth/register",
-    "/auth/reset-password",
-    "/auth/new-password",
+    AUTH_ROUTES.LOGIN,
+    AUTH_ROUTES.REGISTER,
+    AUTH_ROUTES.RESET_PWD,
+    AUTH_ROUTES.NEW_PWD,
   ];
   const mainRoutes = [
     "/main/confirm-email",
@@ -67,14 +85,21 @@ export function RoutesNavigator() {
   }, [isLoggedIn, mode]);
 
   return (
-    <Routes>
-      {isLoading ? (
-        <Route path="/*" element={<div>Loading ...</div>} />
-      ) : isLoggedIn ? (
-        <Route path="/main/*" element={<MainRouter />} />
-      ) : (
-        <Route path="/auth/*" element={<AuthRouter />} />
-      )}
-    </Routes>
+    <div className={prefersMode}>
+      <Routes>
+        {isLoading ? (
+          <Route path="/*" element={<div>Loading ...</div>} />
+        ) : isLoggedIn ? (
+          <Route path="/main/*" element={<MainRouter />} />
+        ) : (
+          <Route path="/auth/*" element={<AuthRouter />} />
+        )}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </div>
   );
+}
+
+function NotFoundPage() {
+  return <div>404 - Page Not Found</div>;
 }

@@ -1,3 +1,9 @@
+import { ResetPasswordFormComponent } from "./components/reset-pwd-form.component";
+
 export function ResetPasswordPage() {
-  return <div>reset-pwd.page</div>;
+  return (
+    <div className="h-screen overflow-y-auto">
+      <ResetPasswordFormComponent />
+    </div>
+  );
 }

@@ -1,3 +1,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.floating {
+  animation-name: floating;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@layer base {
+  .max-container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .light-theme {
+    --color-text-base: 34, 40, 49;
+    --color-text-muted: 57, 62, 70;
+    --color-text-inverted: 238, 238, 238;
+
+    --color-fill-primary: 238, 238, 238;
+    --color-fill-secondary: 255, 255, 255;
+
+    --color-button-base: 34, 40, 49;
+    --color-button-inverted: 238, 238, 238;
+    --color-button-accent: 0, 173, 181;
+
+    --color-border-accent: 0, 173, 181;
+    --color-border-error: 239, 68, 68;
+  }
+
+  .dark-theme {
+    --color-text-base: 238, 238, 238;
+    --color-text-muted: 169, 173, 181;
+    --color-text-inverted: 34, 40, 49;
+
+    --color-fill-primary: 34, 40, 49;
+    --color-fill-secondary: 41, 48, 59;
+
+    --color-button-base: 238, 238, 238;
+    --color-button-inverted: 34, 40, 49;
+    --color-button-accent: 0, 173, 181;
+
+    --color-border-accent: 0, 173, 181;
+    --color-border-error: 239, 68, 68;
+  }
+}

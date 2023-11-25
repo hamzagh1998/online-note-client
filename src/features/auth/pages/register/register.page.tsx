@@ -1,3 +1,9 @@
+import { RegisterFormComponent } from "./components/register-form.component";
+
 export function RegisterPage() {
-  return <div>register.page</div>;
+  return (
+    <div className="h-screen overflow-y-auto">
+      <RegisterFormComponent />
+    </div>
+  );
 }
