@@ -53,16 +53,16 @@ export function RegisterFormComponent() {
               type="text"
               label="First Name:"
               placeholder="First name"
-              value={formValues.lastName}
+              value={formValues.firstName}
               setValue={(value: string) =>
                 setFormValues({ ...formValues, firstName: value })
               }
             />
             <CustomInput
-              type="email"
+              type="text"
               label="Last Name:"
               placeholder="Last name"
-              value={formValues.firstName}
+              value={formValues.lastName}
               setValue={(value: string) =>
                 setFormValues({ ...formValues, lastName: value })
               }

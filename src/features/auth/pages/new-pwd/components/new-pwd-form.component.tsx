@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BsEye } from "react-icons/bs";
+import { PiEyeClosedLight } from "react-icons/pi";
 
 import { CustomInput } from "../../../../../core/components/inputs/custom-input";
 
 import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
+import { useToggle } from "../../../../../core/hooks/use-toggle.hook";
 
 export function NewPasswordFormComponent() {
   const navigate = useNavigate();
 
   const [formValues, setFormValues] = useState({ newPwd: "", confirmPwd: "" });
+
+  const [showPwd, togglePwd] = useToggle(false);
+  const [showConfirmPwd, toggleConfirmPwd] = useToggle(false);
 
   return (
     <section className="flex w-screen">
@@ -26,7 +32,7 @@ export function NewPasswordFormComponent() {
             className="w-full font-bold text-lg text-skin-accent hover:opacity-90 cursor-pointer"
             onClick={() => navigate(AUTH_ROUTES.LOGIN)}
           >
-            &#60; Back
+            &#60; Login
           </span>
           <br />
           <span className="font-bold tracking-wide w-full float-left text-skin-base mb-6 text-3xl md:text-5xl">
@@ -34,22 +40,36 @@ export function NewPasswordFormComponent() {
           </span>
           {/* form content */}
           <CustomInput
-            type="password"
+            type={showPwd ? "text" : "password"}
             label="New Password:"
             placeholder="New Password"
             value={formValues.newPwd}
             setValue={(value: string) =>
               setFormValues({ ...formValues, newPwd: value })
             }
+            icon={
+              showPwd ? (
+                <BsEye size={20} onClick={togglePwd} />
+              ) : (
+                <PiEyeClosedLight size={20} onClick={togglePwd} />
+              )
+            }
           />
           <br />
           <CustomInput
-            type="password"
+            type={showConfirmPwd ? "text" : "password"}
             label="Confirm New Password:"
             placeholder="Confirm New Password"
             value={formValues.confirmPwd}
             setValue={(value: string) =>
               setFormValues({ ...formValues, confirmPwd: value })
+            }
+            icon={
+              showConfirmPwd ? (
+                <BsEye size={20} onClick={toggleConfirmPwd} />
+              ) : (
+                <PiEyeClosedLight size={20} onClick={toggleConfirmPwd} />
+              )
             }
           />
           <input
