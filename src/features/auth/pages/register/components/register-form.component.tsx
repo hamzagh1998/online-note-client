@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ValidationError, object, string } from "yup";
 import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { PiEyeClosedLight } from "react-icons/pi";
@@ -10,16 +11,88 @@ import { useToggle } from "../../../../../core/hooks/use-toggle.hook";
 import authIllustrationImg from "../../../../../assets/auth-illustration.svg";
 
 import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
+import { checkRequiredFields } from "../../../../../utils/check-required-fields";
+
+// import { tryToCatch } from "../../../../../utils/try-to-catch";
+
+type FormValues = Record<string, { value: string; error: string | null }>;
 
 export function RegisterFormComponent() {
   const navigate = useNavigate();
 
-  const [formValues, setFormValues] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+  const [isRequiredInputEmpty, setIsRequiredInputEmpty] = useState(false);
+  const [isInputError, setIsInputError] = useState(false);
+
+  const [formValues, setFormValues] = useState<FormValues>({
+    firstName: { value: "", error: null },
+    lastName: { value: "", error: null },
+    email: { value: "", error: null },
+    password: { value: "", error: null },
   });
+
+  useEffect(() => {
+    const isValid = checkRequiredFields(formValues, [
+      "firstName",
+      "lastName",
+      "email",
+      "password",
+    ]);
+    validateForm();
+
+    setIsRequiredInputEmpty(isValid);
+  }, [formValues]);
+
+  const registerSchema = object({
+    firstName: string().required("First name is required!"),
+    lastName: string().required("Last name is required!"),
+    email: string()
+      .email("Invalid email address!")
+      .required("Email is required!"),
+    password: string().min(6).required("Password is required!"),
+  });
+
+  const handleInput = async (attribute: keyof FormValues, value: string) => {
+    setFormValues((inputsInfo) => ({
+      ...inputsInfo,
+      [attribute]: { value, error: null },
+    }));
+
+    try {
+      await registerSchema.validateAt(
+        attribute,
+        { [attribute]: value },
+        { abortEarly: false }
+      );
+    } catch (error: unknown) {
+      if (error instanceof ValidationError) {
+        setFormValues((inputsInfo) => ({
+          ...inputsInfo,
+          [attribute]: {
+            ...inputsInfo[attribute],
+            error: (error as ValidationError).message,
+          },
+        }));
+      }
+    }
+  };
+
+  const validateForm = () => {
+    for (const key in formValues) {
+      if (formValues[key].error) {
+        setIsInputError(true);
+        return false;
+      }
+    }
+    setIsInputError(false);
+    return true;
+  };
+
+  const onRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isInputError || isRequiredInputEmpty) return;
+
+    console.log("all good");
+  };
 
   const [showPwd, togglePwd] = useToggle(false);
 
@@ -32,8 +105,8 @@ export function RegisterFormComponent() {
           </span>
         </p>
         <form
-          className="flex flex-col items-center justify-center box-border border border-skin-accent  h-fit md:w-10/12 lg:w-1/2 rounded-xl p-6 lg:p-8 bg-skin-fill-secondary shadow-md"
-          onSubmit={() => null}
+          className="flex flex-col items-end justify-center box-border border border-skin-accent  h-fit md:w-10/12 lg:w-1/2 rounded-xl p-6 lg:p-8 bg-skin-fill-secondary shadow-md"
+          onSubmit={onRegister}
         >
           <span className="font-bold tracking-wide w-full float-left text-skin-base mb-6 text-4xl md:text-5xl">
             Sign Up
@@ -53,19 +126,17 @@ export function RegisterFormComponent() {
               type="text"
               label="First Name:"
               placeholder="First name"
-              value={formValues.firstName}
-              setValue={(value: string) =>
-                setFormValues({ ...formValues, firstName: value })
-              }
+              value={formValues.firstName.value}
+              setValue={(value: string) => handleInput("firstName", value)}
+              error={formValues.firstName.error}
             />
             <CustomInput
               type="text"
               label="Last Name:"
               placeholder="Last name"
-              value={formValues.lastName}
-              setValue={(value: string) =>
-                setFormValues({ ...formValues, lastName: value })
-              }
+              value={formValues.lastName.value}
+              setValue={(value: string) => handleInput("lastName", value)}
+              error={formValues.lastName.error}
             />
           </div>
           <br />
@@ -73,20 +144,18 @@ export function RegisterFormComponent() {
             type="email"
             label="Eamil:"
             placeholder="Eamil"
-            value={formValues.email}
-            setValue={(value: string) =>
-              setFormValues({ ...formValues, email: value })
-            }
+            value={formValues.email.value}
+            setValue={(value: string) => handleInput("email", value)}
+            error={formValues.email.error}
           />
           <br />
           <CustomInput
             type={showPwd ? "text" : "password"}
             label="Password:"
             placeholder="Password"
-            value={formValues.password}
-            setValue={(value: string) =>
-              setFormValues({ ...formValues, password: value })
-            }
+            value={formValues.password.value}
+            setValue={(value: string) => handleInput("password", value)}
+            error={formValues.password.error}
             icon={
               showPwd ? (
                 <BsEye size={20} onClick={togglePwd} />
@@ -104,7 +173,15 @@ export function RegisterFormComponent() {
           <input
             type="submit"
             value="Sign Up"
-            className="mt-6 bg-skin-button-accent text-white font-bold tracking-wide hover:opacity-95 rounded-xl py-3 px-6 w-full cursor-pointer"
+            className={`mt-6 bg-skin-button-accent text-white font-bold tracking-wide rounded-xl py-3 px-6 w-full ${
+              isInputError || isRequiredInputEmpty
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
+            } ${
+              isInputError || isRequiredInputEmpty
+                ? "opacity-50"
+                : "hover:opacity-95"
+            }`}
           />
           <p className="mt-6 text-xs">
             By continuing, you agree to NoteWeave&ensp;

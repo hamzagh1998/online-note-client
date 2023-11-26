@@ -27,7 +27,7 @@ export function LoginFormComponent() {
           </span>
         </p>
         <form
-          className="flex flex-col items-center justify-center box-border border border-skin-accent h-fit md:w-10/12 lg:w-auto rounded-xl p-8 bg-skin-fill-secondary shadow-md"
+          className="flex flex-col items-center justify-center box-border border border-skin-accent h-fit md:w-10/12 lg:w-auto rounded-xl p-6 lg:p-8 bg-skin-fill-secondary shadow-md"
           onSubmit={() => null}
         >
           <span className="font-bold tracking-wide w-full float-left text-skin-base mb-6 text-4xl md:text-5xl">

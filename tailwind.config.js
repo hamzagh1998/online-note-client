@@ -24,6 +24,7 @@ export default {
           muted: withOpacity("--color-text-muted"),
           inverted: withOpacity("--color-text-inverted"),
           accent: withOpacity("--color-button-accent"),
+          error: withOpacity("--color-text-error"),
         },
       },
       backgroundColor: {

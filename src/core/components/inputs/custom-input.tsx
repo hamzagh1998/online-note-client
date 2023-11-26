@@ -11,7 +11,7 @@ interface IProps {
   label?: string;
   autocomplete?: AutoComplete;
   placeholder?: string;
-  error?: string;
+  error?: string | null;
   icon?: ReactElement;
   iconPosition?: IconPosition;
   isIconClickable?: boolean;
@@ -44,7 +44,13 @@ export function CustomInput({
                 : "p-4 pl-10"
               : "p-4"
           } h-12 rounded-lg
-            border-2 ${error.length ? "border-skin-error" : "border-gray-400"}
+            border-2 ${
+              error
+                ? error.length
+                  ? "border-skin-error"
+                  : "border-gray-400"
+                : "border-gray-400"
+            }
             focus:border-skin-accent focus:outline-none
             bg-opacity-50 focus:bg-opacity-30
             bg-skin-fill-primary
@@ -65,6 +71,7 @@ export function CustomInput({
           </div>
         )}
       </div>
+      <p className="text-xs text-skin-error mt-1 font-bold">{error}</p>
     </div>
   );
 }

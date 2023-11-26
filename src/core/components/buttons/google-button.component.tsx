@@ -18,7 +18,7 @@ export function GoogleButtonComponent({ text }: { text: string }) {
         hover:bg-skin-fill-primary"
     >
       <FcGoogle size={24} />
-      <p className="text-skin-base font-bold tracking-wide rounded-xl">
+      <p className="text-skin-base max-sm:text-sm font-bold tracking-wide rounded-xl">
         {text}
       </p>
     </div>

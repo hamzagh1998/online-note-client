@@ -40,6 +40,7 @@
     --color-text-base: 34, 40, 49;
     --color-text-muted: 57, 62, 70;
     --color-text-inverted: 238, 238, 238;
+    --color-text-error: 239, 68, 68;
 
     --color-fill-primary: 238, 238, 238;
     --color-fill-secondary: 255, 255, 255;
@@ -56,6 +57,7 @@
     --color-text-base: 238, 238, 238;
     --color-text-muted: 169, 173, 181;
     --color-text-inverted: 34, 40, 49;
+    --color-text-error: 239, 68, 68;
 
     --color-fill-primary: 34, 40, 49;
     --color-fill-secondary: 41, 48, 59;
