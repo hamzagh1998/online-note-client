@@ -10,11 +10,11 @@ import { CustomInput } from "../../../../../core/components/inputs/custom-input"
 import { GoogleButtonComponent } from "../../../../../core/components/buttons/google-button.component";
 import { useToggle } from "../../../../../core/hooks/use-toggle";
 
-import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
 import { ErrorBannerComponent } from "../../../../../core/components/banners/error-banner.component";
 
 import { checkRequiredFields } from "../../../../../utils/check-required-fields";
-import { SmallSpinnerIndicatorsComponent } from "../../../../../core/components/indicators/spinner-indicators.component";
+import { SmallSpinnerIndicatorsComponent } from "../../../../../core/components/activities-indicators/spinner-indicators.component";
 
 type FormValues = Record<string, { value: string; error: string | null }>;
 

@@ -5,7 +5,7 @@ import { PiEyeClosedLight } from "react-icons/pi";
 
 import { CustomInput } from "../../../../../core/components/inputs/custom-input";
 
-import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
 import { useToggle } from "../../../../../core/hooks/use-toggle";
 
 export function NewPasswordFormComponent() {

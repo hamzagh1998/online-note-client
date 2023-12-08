@@ -7,7 +7,7 @@ import { CustomInput } from "../../../../../core/components/inputs/custom-input"
 import { GoogleButtonComponent } from "../../../../../core/components/buttons/google-button.component";
 import { useToggle } from "../../../../../core/hooks/use-toggle";
 
-import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
 
 export function LoginFormComponent() {
   const navigate = useNavigate();

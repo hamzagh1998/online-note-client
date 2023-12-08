@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { CustomInput } from "../../../../../core/components/inputs/custom-input";
 
-import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
 
 export function ResetPasswordFormComponent() {
   const navigate = useNavigate();

@@ -7,8 +7,10 @@ import { auth } from "../libs/firebase";
 
 import { MainRouter } from "./main.router";
 import { AuthRouter } from "./auth.router";
-import { AUTH_ROUTES } from "../core/constants/routes-names";
-import { SpinnerIndicatorsComponent } from "../core/components/indicators/spinner-indicators.component";
+
+import { AUTH_ROUTES } from "./_routes-names";
+
+import { SpinnerIndicatorsComponent } from "../core/components/activities-indicators/spinner-indicators.component";
 
 import { RootState } from "../redux/store";
 
