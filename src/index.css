@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * {
   margin: 0;
@@ -41,7 +42,7 @@
     --color-text-muted: 57, 62, 70;
     --color-text-inverted: 238, 238, 238;
     --color-text-error: 239, 68, 68;
-
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
     --color-fill-primary: 238, 238, 238;
     --color-fill-secondary: 255, 255, 255;
 

@@ -6,7 +6,7 @@ import { PiEyeClosedLight } from "react-icons/pi";
 import { CustomInput } from "../../../../../core/components/inputs/custom-input";
 
 import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
-import { useToggle } from "../../../../../core/hooks/use-toggle.hook";
+import { useToggle } from "../../../../../core/hooks/use-toggle";
 
 export function NewPasswordFormComponent() {
   const navigate = useNavigate();
@@ -20,12 +20,12 @@ export function NewPasswordFormComponent() {
     <section className="flex w-screen">
       <div className="flex-1 flex flex-col items-center justify-start w-full p-4">
         <p className="my-8">
-          <span className="font-bold tracking-wide text-skin-accent text-4xl md:text-5xl">
-            NoteWeave
+          <span className="font-bold font-pacifico tracking-wide text-skin-accent text-4xl md:text-6xl">
+            OnlineNote
           </span>
         </p>
         <form
-          className="flex flex-col items-center justify-center box-border border border-skin-accent h-fit md:w-10/12 lg:w-[30%] rounded-xl p-8 bg-skin-fill-secondary shadow-md"
+          className="flex flex-col items-center justify-center box-border border border-skin-accent h-fit sm:w-[50%] lg:w-[33%] rounded-xl p-8 bg-skin-fill-secondary shadow-md"
           onSubmit={() => null}
         >
           <span

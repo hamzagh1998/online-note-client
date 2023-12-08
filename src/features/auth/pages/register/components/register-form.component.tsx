@@ -4,16 +4,16 @@ import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { PiEyeClosedLight } from "react-icons/pi";
 
+import { useFirebaseEmailRegisteration } from "../hooks/use-firebase-email-registration";
+
 import { CustomInput } from "../../../../../core/components/inputs/custom-input";
 import { GoogleButtonComponent } from "../../../../../core/components/buttons/google-button.component";
-import { useToggle } from "../../../../../core/hooks/use-toggle.hook";
-
-import authIllustrationImg from "../../../../../assets/auth-illustration.svg";
+import { useToggle } from "../../../../../core/hooks/use-toggle";
 
 import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
-import { checkRequiredFields } from "../../../../../utils/check-required-fields";
+import { ErrorBannerComponent } from "../../../../../core/components/banners/error-banner.component";
 
-// import { tryToCatch } from "../../../../../utils/try-to-catch";
+import { checkRequiredFields } from "../../../../../utils/check-required-fields";
 
 type FormValues = Record<string, { value: string; error: string | null }>;
 
@@ -29,6 +29,17 @@ export function RegisterFormComponent() {
     email: { value: "", error: null },
     password: { value: "", error: null },
   });
+
+  const [showPwd, togglePwd] = useToggle(false);
+
+  const { onRegister, isLoading, error } = useFirebaseEmailRegisteration({
+    firstName: formValues.firstName.value,
+    lastName: formValues.lastName.value,
+    email: formValues.email.value,
+    password: formValues.password.value,
+  });
+
+  console.log(isLoading, error);
 
   useEffect(() => {
     const isValid = checkRequiredFields(formValues, [
@@ -87,123 +98,114 @@ export function RegisterFormComponent() {
     return true;
   };
 
-  const onRegister = async (e: React.FormEvent) => {
+  const onRegisterWithEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isInputError || isRequiredInputEmpty) return;
 
-    console.log("all good");
+    onRegister();
   };
 
-  const [showPwd, togglePwd] = useToggle(false);
-
   return (
-    <section className="flex w-screen">
-      <div className="flex-1 flex flex-col items-center justify-start w-full p-4">
-        <p className="my-8">
-          <span className="font-bold tracking-wide text-skin-accent text-4xl md:text-5xl">
-            NoteWeave
-          </span>
-        </p>
-        <form
-          className="flex flex-col items-end justify-center box-border border border-skin-accent  h-fit md:w-10/12 lg:w-1/2 rounded-xl p-6 lg:p-8 bg-skin-fill-secondary shadow-md"
-          onSubmit={onRegister}
+    <form
+      className="flex flex-col items-center justify-center box-border border border-skin-accent h-fit md:w-1/2 lg:w-1/2 rounded-xl p-6 lg:p-8 bg-skin-fill-secondary shadow-md"
+      onSubmit={onRegisterWithEmail}
+    >
+      <span className="font-bold tracking-wide w-full float-left text-skin-base mb-6 text-4xl md:text-5xl">
+        Sign Up
+      </span>
+      <p className="my-4 float-righ text-left max-sm:text-sm w-full">
+        Already have an account?&ensp;
+        <span
+          className="underline cursor-pointer text-skin-accent hover:opacity-80"
+          onClick={() => navigate(AUTH_ROUTES.LOGIN)}
         >
-          <span className="font-bold tracking-wide w-full float-left text-skin-base mb-6 text-4xl md:text-5xl">
-            Sign Up
-          </span>
-          <p className="my-4 float-righ text-left max-sm:text-sm w-full">
-            Already have an account?&ensp;
-            <span
-              className="underline cursor-pointer text-skin-accent hover:opacity-80"
-              onClick={() => navigate(AUTH_ROUTES.LOGIN)}
-            >
-              Sign In
-            </span>
-          </p>
-          {/* form content */}
-          <div className="flex justify-center items-center gap-2 w-full">
-            <CustomInput
-              type="text"
-              label="First Name:"
-              placeholder="First name"
-              value={formValues.firstName.value}
-              setValue={(value: string) => handleInput("firstName", value)}
-              error={formValues.firstName.error}
-            />
-            <CustomInput
-              type="text"
-              label="Last Name:"
-              placeholder="Last name"
-              value={formValues.lastName.value}
-              setValue={(value: string) => handleInput("lastName", value)}
-              error={formValues.lastName.error}
-            />
-          </div>
-          <br />
-          <CustomInput
-            type="email"
-            label="Eamil:"
-            placeholder="Eamil"
-            value={formValues.email.value}
-            setValue={(value: string) => handleInput("email", value)}
-            error={formValues.email.error}
-          />
-          <br />
-          <CustomInput
-            type={showPwd ? "text" : "password"}
-            label="Password:"
-            placeholder="Password"
-            value={formValues.password.value}
-            setValue={(value: string) => handleInput("password", value)}
-            error={formValues.password.error}
-            icon={
-              showPwd ? (
-                <BsEye size={20} onClick={togglePwd} />
-              ) : (
-                <PiEyeClosedLight size={20} onClick={togglePwd} />
-              )
-            }
-          />
-          <div className="flex justify-center w-full items-center gap-3 my-3 opacity-50 ">
-            <div className="w-full bg-black h-[.5px]"></div>
-            <p>Or</p>
-            <div className="w-full bg-black h-[.5px]"></div>
-          </div>
-          <GoogleButtonComponent text="Sign Up With Google" />
-          <input
-            type="submit"
-            value="Sign Up"
-            className={`mt-6 bg-skin-button-accent text-white font-bold tracking-wide rounded-xl py-3 px-6 w-full ${
-              isInputError || isRequiredInputEmpty
-                ? "cursor-not-allowed"
-                : "cursor-pointer"
-            } ${
-              isInputError || isRequiredInputEmpty
-                ? "opacity-50"
-                : "hover:opacity-95"
-            }`}
-          />
-          <p className="mt-6 text-xs">
-            By continuing, you agree to NoteWeave&ensp;
-            <a
-              href="#"
-              className="text-skin-accent text-sm cursor-pointer  font-bold"
-            >
-              Terms of Service
-            </a>
-            &ensp;and&ensp;
-            <a
-              href="#"
-              className="text-skin-accent text-sm cursor-pointer  font-bold"
-            >
-              Privacy Policy.
-            </a>
-          </p>
-        </form>
+          Sign In
+        </span>
+      </p>
+      {/* form content */}
+      {error ? (
+        <ErrorBannerComponent
+          message={typeof error === "string" ? error : ""}
+        />
+      ) : null}
+      <div className="flex justify-center items-start gap-2 w-full">
+        <CustomInput
+          type="text"
+          label="First Name:"
+          placeholder="First name"
+          value={formValues.firstName.value}
+          setValue={(value: string) => handleInput("firstName", value)}
+          error={formValues.firstName.error}
+        />
+        <CustomInput
+          type="text"
+          label="Last Name:"
+          placeholder="Last name"
+          value={formValues.lastName.value}
+          setValue={(value: string) => handleInput("lastName", value)}
+          error={formValues.lastName.error}
+        />
       </div>
-      <div className="hidden flex-1 justify-center items-end md:flex floating">
-        <img src={authIllustrationImg} alt="illustration img" />
+      <br />
+      <CustomInput
+        type="email"
+        label="Eamil:"
+        placeholder="Eamil"
+        value={formValues.email.value}
+        setValue={(value: string) => handleInput("email", value)}
+        error={formValues.email.error}
+      />
+      <br />
+      <CustomInput
+        type={showPwd ? "text" : "password"}
+        label="Password:"
+        placeholder="Password"
+        value={formValues.password.value}
+        setValue={(value: string) => handleInput("password", value)}
+        error={formValues.password.error}
+        icon={
+          showPwd ? (
+            <BsEye size={20} onClick={togglePwd} />
+          ) : (
+            <PiEyeClosedLight size={20} onClick={togglePwd} />
+          )
+        }
+      />
+      <input
+        type="submit"
+        value="Sign Up"
+        className={`mt-6 bg-skin-button-accent text-white font-bold tracking-wide rounded-xl py-3 px-6 w-full ${
+          isInputError || isRequiredInputEmpty
+            ? "cursor-not-allowed"
+            : "cursor-pointer"
+        } ${
+          isInputError || isRequiredInputEmpty
+            ? "opacity-50"
+            : "hover:opacity-95"
+        }`}
+      />
+      <div className="flex justify-center w-full items-center gap-3 my-3 opacity-50 ">
+        <div className="w-full bg-black h-[.5px]"></div>
+        <p>Or</p>
+        <div className="w-full bg-black h-[.5px]"></div>
       </div>
-    </section>
+      <GoogleButtonComponent text="Sign Up With Google" />
+      <p className="mt-6 text-xs">
+        By continuing, you agree to OnlineNote&ensp;
+        <a
+          href="#"
+          className="text-skin-accent text-sm cursor-pointer font-bold"
+        >
+          Terms of Service
+        </a>
+        &ensp;and&ensp;
+        <a
+          href="#"
+          className="text-skin-accent text-sm cursor-pointer font-bold"
+        >
+          Privacy Policy.
+        </a>
+      </p>
+    </form>
   );
 }

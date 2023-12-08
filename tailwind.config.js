@@ -17,7 +17,12 @@ export default {
     },
   },
   theme: {
+    screen: {},
     extend: {
+      fontFamily: {
+        pacifico: ["Pacifico", "sans-serif"],
+        permanent: ["Permanent+Marker", "sans-serif"],
+      },
       textColor: {
         skin: {
           base: withOpacity("--color-text-base"),
@@ -47,6 +52,9 @@ export default {
         skin: {
           hue: withOpacity("--color-fill"),
         },
+      },
+      screens: {
+        md: "1440px",
       },
     },
   },
