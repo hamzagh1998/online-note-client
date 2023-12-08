@@ -5,3 +5,11 @@ export function SpinnerIndicatorsComponent() {
     </div>
   );
 }
+
+export function SmallSpinnerIndicatorsComponent() {
+  return (
+    <div className="flex justify-center items-center w-fit h-fit my-5">
+      <div className="animate-spin border-[5px] border-t-white border-skin-accent rounded-full w-[25px] h-[25px]"></div>
+    </div>
+  );
+}

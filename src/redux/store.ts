@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { api } from "./services/api";
+import { api } from "./api";
 
 import authSlice from "../features/auth/pages/slices/auth.slice";
 
-export interface RootState {
+export type RootState = {
   auth: {
     userData: null | object;
     fbToken: null | string;
     token: null | string;
   };
-}
+};
 
 export const store = configureStore({
   reducer: {

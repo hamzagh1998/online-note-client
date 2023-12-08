@@ -14,6 +14,7 @@ import { AUTH_ROUTES } from "../../../../../core/constants/routes-names";
 import { ErrorBannerComponent } from "../../../../../core/components/banners/error-banner.component";
 
 import { checkRequiredFields } from "../../../../../utils/check-required-fields";
+import { SmallSpinnerIndicatorsComponent } from "../../../../../core/components/indicators/spinner-indicators.component";
 
 type FormValues = Record<string, { value: string; error: string | null }>;
 
@@ -38,8 +39,6 @@ export function RegisterFormComponent() {
     email: formValues.email.value,
     password: formValues.password.value,
   });
-
-  console.log(isLoading, error);
 
   useEffect(() => {
     const isValid = checkRequiredFields(formValues, [
@@ -171,19 +170,23 @@ export function RegisterFormComponent() {
           )
         }
       />
-      <input
-        type="submit"
-        value="Sign Up"
-        className={`mt-6 bg-skin-button-accent text-white font-bold tracking-wide rounded-xl py-3 px-6 w-full ${
-          isInputError || isRequiredInputEmpty
-            ? "cursor-not-allowed"
-            : "cursor-pointer"
-        } ${
-          isInputError || isRequiredInputEmpty
-            ? "opacity-50"
-            : "hover:opacity-95"
-        }`}
-      />
+      {isLoading ? (
+        <SmallSpinnerIndicatorsComponent />
+      ) : (
+        <input
+          type="submit"
+          value="Sign Up"
+          className={`mt-6 bg-skin-button-accent text-white font-bold tracking-wide rounded-xl py-3 px-6 w-full ${
+            isInputError || isRequiredInputEmpty
+              ? "cursor-not-allowed"
+              : "cursor-pointer"
+          } ${
+            isInputError || isRequiredInputEmpty
+              ? "opacity-50"
+              : "hover:opacity-95"
+          }`}
+        />
+      )}
       <div className="flex justify-center w-full items-center gap-3 my-3 opacity-50 ">
         <div className="w-full bg-black h-[.5px]"></div>
         <p>Or</p>

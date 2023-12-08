@@ -12,7 +12,7 @@ import { RegisterInputs, RegisterRequest, RegisterResponse } from "../../types";
 
 import { auth } from "../../../../../libs/firebase";
 
-import { useRegisterMutation } from "../../slices/auth.service";
+import { useRegisterMutation } from "../../slices/api/auth.service";
 
 import { setUserData } from "../../slices/auth.slice";
 
@@ -83,10 +83,14 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
         const errorCode = firebaseError.code;
 
         const errorType = errorCode.split("/")[1];
+        console.log(errorType);
+
         setError(
           errorType === "email-already-in-use"
             ? "Email address already exists!"
-            : "Something went wrong please check your network then try again!"
+            : errorType === "invalid-email"
+              ? "Please enter a valid email address!"
+              : "Something went wrong please check your network then try again!"
         );
       }
     } catch (err: Error | unknown | string) {

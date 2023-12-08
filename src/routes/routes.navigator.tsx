@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import { auth } from "../libs/firebase";
+
 import { MainRouter } from "./main.router";
 import { AuthRouter } from "./auth.router";
 import { AUTH_ROUTES } from "../core/constants/routes-names";
 import { SpinnerIndicatorsComponent } from "../core/components/indicators/spinner-indicators.component";
 
+import { RootState } from "../redux/store";
+
 export function RoutesNavigator() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const [, setUserData] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -90,7 +96,7 @@ export function RoutesNavigator() {
       <Routes>
         {isLoading ? (
           <Route path="/*" element={<SpinnerIndicatorsComponent />} />
-        ) : isLoggedIn ? (
+        ) : isLoggedIn && token ? (
           <Route path="/main/*" element={<MainRouter />} />
         ) : (
           <Route path="/auth/*" element={<AuthRouter />} />

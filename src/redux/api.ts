@@ -5,7 +5,8 @@ import {
   BaseQueryApi,
 } from "@reduxjs/toolkit/query/react";
 
-import { RootState } from "../store";
+import { RootState } from "./store";
+import { apiBaseUrl } from "../config";
 
 // Define prepareHeaders function
 const prepareHeaders = (
@@ -20,7 +21,7 @@ const prepareHeaders = (
 };
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: "http://127.0.0.1:4000/api/",
+  baseUrl: apiBaseUrl,
   prepareHeaders,
 });
 

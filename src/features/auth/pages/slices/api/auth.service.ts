@@ -1,12 +1,14 @@
-import { api } from "../../../../redux/services/api";
+import { api } from "../../../../../redux/api";
 
-import { LoginRequest, RegisterRequest, NewPasswordRequest } from "../types";
+import { authEndpoints } from "./auth-endpoints";
+
+import { LoginRequest, RegisterRequest, NewPasswordRequest } from "../../types";
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation({
       query: (payload: LoginRequest) => ({
-        url: "auth/login",
+        url: authEndpoints.LOGIN,
         method: "POST",
         body: payload,
       }),
@@ -14,7 +16,7 @@ export const authApi = api.injectEndpoints({
 
     register: build.mutation({
       query: (payload: RegisterRequest) => ({
-        url: "auth/register",
+        url: authEndpoints.REGISTER,
         method: "POST",
         body: payload,
       }),
@@ -22,7 +24,7 @@ export const authApi = api.injectEndpoints({
 
     resetPassword: build.mutation({
       query: (payload: NewPasswordRequest) => ({
-        url: "auth/new-password",
+        url: authEndpoints.NEW_PASSWORD,
         method: "POST",
         body: payload,
       }),
