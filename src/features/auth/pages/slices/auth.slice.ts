@@ -1,16 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface State {
+export type AuthState = {
   userData: null | object;
   fbToken: null | string;
-  token: null | string;
-}
+};
 
-const initialState: State = {
+const initialState: AuthState = {
   userData: null,
   fbToken: null,
-  token: null,
 };
 
 export const authSlice = createSlice({
@@ -19,11 +17,10 @@ export const authSlice = createSlice({
   reducers: {
     setUserData: (
       state,
-      { payload: { userData, fbToken, token } }: PayloadAction<State>
+      { payload: { userData, fbToken } }: PayloadAction<AuthState>
     ) => {
       state.userData = userData;
       state.fbToken = fbToken;
-      state.token = token;
     },
   },
 });

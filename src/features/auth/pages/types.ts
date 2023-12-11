@@ -22,7 +22,7 @@ export type RegisterRequest = {
 
 export type RegisterResponse = {
   error?: boolean;
-  token?: string;
+  userData?: object;
   statusCode: number;
 };
 

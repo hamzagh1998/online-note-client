@@ -13,10 +13,12 @@ const prepareHeaders = (
   headers: Headers,
   api: Pick<BaseQueryApi, "getState">
 ) => {
-  const token = (api.getState() as RootState).auth.token;
-  if (token) {
-    headers.set("Authorization", "Bearer " + token);
+  // Access userFbToken from the API state
+  const userFbToken = (api.getState() as RootState).auth.fbToken;
+  if (userFbToken) {
+    headers.set("Authorization", "Bearer " + userFbToken);
   }
+
   return headers;
 };
 
@@ -25,7 +27,7 @@ export const baseQuery = fetchBaseQuery({
   prepareHeaders,
 });
 
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 5 });
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 3 });
 
 // Create the API
 export const api = createApi({

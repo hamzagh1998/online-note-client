@@ -6,7 +6,6 @@ import {
   deleteUser,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { jwtDecode } from "jwt-decode";
 
 import { RegisterInputs, RegisterRequest, RegisterResponse } from "../../types";
 
@@ -46,6 +45,13 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
             userFbToken,
             provider: "email",
           }; // Create the payload for registration
+          dispatch(
+            // save firebase token
+            setUserData({
+              fbToken: userFbToken,
+              userData: null,
+            })
+          );
           try {
             await register(payload);
             // Check for errors
@@ -61,15 +67,14 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
               if (res.statusCode > 201) {
                 setError(res.error);
                 if (userFbToken) await deleteUser(auth.currentUser!);
-              } else if (res.token) {
-                const token = res.token;
+              } else if (res.userData) {
+                const userData = res.userData;
                 await sendEmailVerification(data.user);
-                const decoded = jwtDecode(token) || null;
                 dispatch(
+                  // save user data
                   setUserData({
-                    token: token,
                     fbToken: userFbToken,
-                    userData: decoded,
+                    userData,
                   })
                 );
               }
