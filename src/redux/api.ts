@@ -32,5 +32,5 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRetry,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  endpoints: (build) => ({}), // Add your endpoints here
+  endpoints: () => ({}), // Add your endpoints here
 });
