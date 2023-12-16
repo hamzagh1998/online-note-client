@@ -3,7 +3,7 @@ import { LoginFormComponent } from "./components/login-form.component";
 
 export function LoginPage() {
   return (
-    <div className="h-screen overflow-y-hidden">
+    <div className="h-screen overflow-x-hidden">
       <AuthLayout>
         <LoginFormComponent />
       </AuthLayout>
