@@ -14,16 +14,12 @@ export type RegisterRequest = {
   firstName: string;
   lastName: string;
   email: string;
-  password?: string;
   photoURL?: string;
-  userFbToken: string;
   provider: Provider;
 };
 
 export type RegisterResponse = {
-  error?: boolean;
-  userData?: object;
-  statusCode: number;
+  data: { error: boolean; detail: object | null };
 };
 
 // Login types

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   createUserWithEmailAndPassword,
-  sendEmailVerification,
   deleteUser,
+  sendEmailVerification,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
@@ -18,13 +18,14 @@ import { setUserData } from "../../slices/auth.slice";
 export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
   const dispatch = useDispatch();
 
-  const [register, { isLoading, data: regsiterData, error: registerError }] =
-    useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const [error, setError] = useState<Error | unknown | null | string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onRegister = async () => {
     setError(null);
+    setIsLoading(true);
     try {
       const { email, password } = inputsInfo;
 
@@ -36,13 +37,11 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
         );
         if (data.user && data.user.providerData && data.user.providerData[0]) {
           const userFbToken = await data.user.getIdToken(); // Get the Firebase ID token
-          const { email, password, firstName, lastName } = inputsInfo; // Extract required fields
+          const { email, firstName, lastName } = inputsInfo; // Extract required fields
           const payload: RegisterRequest = {
             firstName,
             lastName,
             email,
-            password,
-            userFbToken,
             provider: "email",
           }; // Create the payload for registration
           dispatch(
@@ -53,31 +52,22 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
             })
           );
           try {
-            await register(payload);
+            const res = (await register(payload)) as RegisterResponse;
             // Check for errors
-            if (registerError) {
+            if (res.data.error) {
               // Handle error
               setError(
                 "Something went wrong please check your network then try again!"
               );
             } else {
-              // Access data
-              const res: RegisterResponse = regsiterData;
-              // Server side error
-              if (res.statusCode > 201) {
-                setError(res.error);
-                if (userFbToken) await deleteUser(auth.currentUser!);
-              } else if (res.userData) {
-                const userData = res.userData;
-                await sendEmailVerification(data.user);
-                dispatch(
-                  // save user data
-                  setUserData({
-                    fbToken: userFbToken,
-                    userData,
-                  })
-                );
-              }
+              await sendEmailVerification(data.user);
+              dispatch(
+                // save user data
+                setUserData({
+                  fbToken: userFbToken,
+                  userData: res.data.detail,
+                })
+              );
             }
           } catch (error) {
             if (userFbToken) await deleteUser(auth.currentUser!);
@@ -88,8 +78,6 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
         const errorCode = firebaseError.code;
 
         const errorType = errorCode.split("/")[1];
-        console.log(errorType);
-
         setError(
           errorType === "email-already-in-use"
             ? "Email address already exists!"
@@ -100,6 +88,8 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
       }
     } catch (err: Error | unknown | string) {
       setError(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
