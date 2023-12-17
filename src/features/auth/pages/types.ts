@@ -18,21 +18,14 @@ export type RegisterRequest = {
   provider: Provider;
 };
 
-export type RegisterResponse = {
-  data: { error: boolean; detail: object | null };
-};
-
 // Login types
-
 export type LoginRequest = {
   email: string;
-  password?: string;
-  userFbToken: string;
+  photoURL?: string;
   provider: Provider;
 };
 
 // Reset password types
-
 export type NewPasswordRequest = {
   password: string;
   oobCode: string | null;

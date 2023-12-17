@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
 import { PiEyeClosedLight } from "react-icons/pi";
 
-import { CustomInput } from "../../../../../core/components/inputs/custom-input";
+import { CustomInput } from "../../../../../common/components/inputs/custom-input";
 
 import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
-import { useToggle } from "../../../../../core/hooks/use-toggle";
+import { useToggle } from "../../../../../common/hooks/use-toggle";
 
 export function NewPasswordFormComponent() {
   const navigate = useNavigate();

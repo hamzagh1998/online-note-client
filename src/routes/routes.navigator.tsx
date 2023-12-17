@@ -10,7 +10,7 @@ import { AuthRouter } from "./auth.router";
 
 import { AUTH_ROUTES } from "./_routes-names";
 
-import { SpinnerIndicatorsComponent } from "../core/components/activities-indicators/spinner-indicators.component";
+import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
 
 import { RootState } from "../redux/store";
 
@@ -18,7 +18,7 @@ export function RoutesNavigator() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { token } = useSelector((state: RootState) => state.auth);
+  const { userData } = useSelector((state: RootState) => state.auth);
 
   const [, setUserData] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -98,7 +98,7 @@ export function RoutesNavigator() {
       <Routes>
         {isLoading ? (
           <Route path="/*" element={<SpinnerIndicatorsComponent />} />
-        ) : isLoggedIn && token ? (
+        ) : isLoggedIn && userData ? (
           <Route path="/main/*" element={<MainRouter />} />
         ) : (
           <Route path="/auth/*" element={<AuthRouter />} />

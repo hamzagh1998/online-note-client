@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { CustomInput } from "../../../../../core/components/inputs/custom-input";
+import { CustomInput } from "../../../../../common/components/inputs/custom-input";
 
 import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
 

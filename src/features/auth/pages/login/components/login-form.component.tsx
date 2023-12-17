@@ -3,9 +3,9 @@ import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { PiEyeClosedLight } from "react-icons/pi";
 
-import { CustomInput } from "../../../../../core/components/inputs/custom-input";
-import { GoogleButtonComponent } from "../../../../../core/components/buttons/google-button.component";
-import { useToggle } from "../../../../../core/hooks/use-toggle";
+import { CustomInput } from "../../../../../common/components/inputs/custom-input";
+import { GoogleButtonComponent } from "../../../../../common/components/buttons/google-button.component";
+import { useToggle } from "../../../../../common/hooks/use-toggle";
 
 import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
 

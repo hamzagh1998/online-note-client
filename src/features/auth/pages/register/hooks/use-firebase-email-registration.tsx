@@ -7,13 +7,15 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
-import { RegisterInputs, RegisterRequest, RegisterResponse } from "../../types";
+import { RegisterInputs, RegisterRequest } from "../../types";
 
 import { auth } from "../../../../../libs/firebase";
 
 import { useRegisterMutation } from "../../slices/api/auth.service";
 
 import { setUserData } from "../../slices/auth.slice";
+
+import { Response } from "../../../../../common/types";
 
 export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
             })
           );
           try {
-            const res = (await register(payload)) as RegisterResponse;
+            const res = (await register(payload)) as Response;
             // Check for errors
             if (res.data.error) {
               // Handle error

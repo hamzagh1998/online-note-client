@@ -5,16 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { PiEyeClosedLight } from "react-icons/pi";
 
 import { useFirebaseEmailRegisteration } from "../hooks/use-firebase-email-registration";
+import { useFirebaseGmailAuth } from "../../hooks/use-firebase-gmail-auth";
 
-import { CustomInput } from "../../../../../core/components/inputs/custom-input";
-import { GoogleButtonComponent } from "../../../../../core/components/buttons/google-button.component";
-import { useToggle } from "../../../../../core/hooks/use-toggle";
+import { CustomInput } from "../../../../../common/components/inputs/custom-input";
+import { GoogleButtonComponent } from "../../../../../common/components/buttons/google-button.component";
+import { useToggle } from "../../../../../common/hooks/use-toggle";
 
 import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
-import { ErrorBannerComponent } from "../../../../../core/components/banners/error-banner.component";
+import { ErrorBannerComponent } from "../../../../../common/components/banners/error-banner.component";
 
 import { checkRequiredFields } from "../../../../../utils/check-required-fields";
-import { SmallSpinnerIndicatorsComponent } from "../../../../../core/components/activities-indicators/spinner-indicators.component";
+import { SmallSpinnerIndicatorsComponent } from "../../../../../common/components/activities-indicators/spinner-indicators.component";
 
 type FormValues = Record<string, { value: string; error: string | null }>;
 
@@ -39,6 +40,12 @@ export function RegisterFormComponent() {
     email: formValues.email.value,
     password: formValues.password.value,
   });
+
+  const {
+    onRegister: onGoogleRegister,
+    isLoading: isGoogleLoading,
+    error: googleError,
+  } = useFirebaseGmailAuth("register");
 
   useEffect(() => {
     const isValid = checkRequiredFields(formValues, [
@@ -107,7 +114,7 @@ export function RegisterFormComponent() {
   return (
     <form
       className="flex flex-col items-center justify-center box-border border border-skin-accent h-fit md:w-1/2 lg:w-1/2 rounded-xl p-6 lg:p-8 bg-skin-fill-secondary shadow-md"
-      onSubmit={onRegisterWithEmail}
+      onSubmit={isGoogleLoading ? () => null : onRegisterWithEmail}
     >
       <span className="font-bold tracking-wide w-full float-left text-skin-base mb-6 text-4xl md:text-5xl">
         Sign Up
@@ -122,9 +129,14 @@ export function RegisterFormComponent() {
         </span>
       </p>
       {/* form content */}
-      {error ? (
+      {error && !googleError ? (
         <ErrorBannerComponent
           message={typeof error === "string" ? error : ""}
+        />
+      ) : null}
+      {googleError && !error ? (
+        <ErrorBannerComponent
+          message={typeof googleError === "string" ? googleError : ""}
         />
       ) : null}
       <div className="flex justify-center items-start gap-2 w-full">
@@ -177,11 +189,11 @@ export function RegisterFormComponent() {
           type="submit"
           value="Sign Up"
           className={`mt-6 bg-skin-button-accent text-white font-bold tracking-wide rounded-xl py-3 px-6 w-full ${
-            isInputError || isRequiredInputEmpty
+            isInputError || isRequiredInputEmpty || isGoogleLoading
               ? "cursor-not-allowed"
               : "cursor-pointer"
           } ${
-            isInputError || isRequiredInputEmpty
+            isInputError || isRequiredInputEmpty || isGoogleLoading
               ? "opacity-50"
               : "hover:opacity-95"
           }`}
@@ -192,7 +204,13 @@ export function RegisterFormComponent() {
         <p>Or</p>
         <div className="w-full bg-black h-[.5px]"></div>
       </div>
-      <GoogleButtonComponent text="Sign Up With Google" />
+      {isGoogleLoading ? (
+        <SmallSpinnerIndicatorsComponent />
+      ) : (
+        <div className="w-full" onClick={onGoogleRegister}>
+          <GoogleButtonComponent text="Sign Up With Google" />
+        </div>
+      )}
       <p className="mt-6 text-xs">
         By continuing, you agree to OnlineNote&ensp;
         <a
