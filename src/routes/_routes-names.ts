@@ -1,6 +1,13 @@
 export const AUTH_ROUTES = {
-  LOGIN: "/auth/login",
-  REGISTER: "/auth/register",
-  RESET_PWD: "/auth/reset-password", // forget pwd
-  NEW_PWD: "/auth/new-password",
+  LOGIN: "/login",
+  REGISTER: "/register",
+  RESET_PWD: "/reset-password", // forget pwd
+  NEW_PWD: "/new-password",
+};
+
+export const MAIN_REOTES = {
+  CONFIRM_EMAIL: "/confirm-email",
+  NOTES: "/notes",
+  NOTE_DETAIL: "/note/:id",
+  NOTE_CRUD: "/note-crud/:operation",
 };

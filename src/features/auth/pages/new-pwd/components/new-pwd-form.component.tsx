@@ -11,6 +11,10 @@ import { useToggle } from "../../../../../common/hooks/use-toggle";
 export function NewPasswordFormComponent() {
   const navigate = useNavigate();
 
+  const redirections = {
+    login: "/auth" + AUTH_ROUTES.LOGIN,
+  };
+
   const [formValues, setFormValues] = useState({ newPwd: "", confirmPwd: "" });
 
   const [showPwd, togglePwd] = useToggle(false);
@@ -30,7 +34,7 @@ export function NewPasswordFormComponent() {
         >
           <span
             className="w-full font-bold text-lg text-skin-accent hover:opacity-90 cursor-pointer"
-            onClick={() => navigate(AUTH_ROUTES.LOGIN)}
+            onClick={() => navigate(redirections.login)}
           >
             &#60; Login
           </span>

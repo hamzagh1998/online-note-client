@@ -1,8 +1,12 @@
-import { api } from "../../../../../redux/api";
+import { api } from "../../../../redux/api";
+
+import {
+  LoginRequest,
+  NewPasswordRequest,
+  RegisterRequest,
+} from "../../pages/types";
 
 import { authEndpoints } from "./auth-endpoints";
-
-import { LoginRequest, RegisterRequest, NewPasswordRequest } from "../../types";
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({

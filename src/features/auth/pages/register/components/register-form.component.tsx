@@ -22,6 +22,10 @@ type FormValues = Record<string, { value: string; error: string | null }>;
 export function RegisterFormComponent() {
   const navigate = useNavigate();
 
+  const redirections = {
+    login: "/auth" + AUTH_ROUTES.LOGIN,
+  };
+
   const [isRequiredInputEmpty, setIsRequiredInputEmpty] = useState(false);
   const [isInputError, setIsInputError] = useState(false);
 
@@ -42,10 +46,10 @@ export function RegisterFormComponent() {
   });
 
   const {
-    onRegister: onGoogleRegister,
+    onAuth: onGoogleRegister,
     isLoading: isGoogleLoading,
     error: googleError,
-  } = useFirebaseGmailAuth("register");
+  } = useFirebaseGmailAuth();
 
   useEffect(() => {
     const isValid = checkRequiredFields(formValues, [
@@ -123,7 +127,7 @@ export function RegisterFormComponent() {
         Already have an account?&ensp;
         <span
           className="underline cursor-pointer text-skin-accent hover:opacity-80"
-          onClick={() => navigate(AUTH_ROUTES.LOGIN)}
+          onClick={() => navigate(redirections.login)}
         >
           Sign In
         </span>

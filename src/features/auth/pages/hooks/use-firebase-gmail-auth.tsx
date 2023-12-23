@@ -3,31 +3,25 @@ import { GoogleAuthProvider, deleteUser, signInWithPopup } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { useDispatch } from "react-redux";
 
-import {
-  useLoginMutation,
-  useRegisterMutation,
-} from "../slices/api/auth.service";
+import { useLoginMutation } from "../../slices/api/auth.service";
 
 import { auth, googleProvider } from "../../../../libs/firebase";
 
-import { setUserData } from "../slices/auth.slice";
+import { setUserData } from "../../slices/auth.slice";
 
-import { LoginRequest, RegisterRequest } from "../types";
+import { GoogleAuthRequest } from "../types";
 
 import { MiddlewareErrorResponse, Response } from "../../../../common/types";
 
-type AuthType = "register" | "login";
-
-export function useFirebaseGmailAuth(authType: AuthType) {
+export function useFirebaseGmailAuth() {
   const dispatch = useDispatch();
 
-  const [register] = useRegisterMutation();
   const [login] = useLoginMutation();
 
   const [error, setError] = useState<Error | unknown | null | string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onRegister = async () => {
+  const onAuth = async () => {
     setIsLoading(true);
     try {
       const data = await signInWithPopup(auth, googleProvider);
@@ -42,28 +36,16 @@ export function useFirebaseGmailAuth(authType: AuthType) {
         );
         dispatch(setUserData({ fbToken: userFbToken, userData: null }));
         if (!email) return setError("Error, no email provided!");
-        const payload: RegisterRequest | LoginRequest =
-          authType === "register"
-            ? {
-                firstName,
-                lastName,
-                email,
-                photoURL: photoURL || "",
-                provider: "google",
-              }
-            : {
-                email,
-                photoURL: photoURL || "",
-                provider: "google",
-              }; // Create the payload for registration
-        const res =
-          authType === "register"
-            ? ((await register(payload as RegisterRequest)) as
-                | Response
-                | MiddlewareErrorResponse)
-            : ((await login(payload as LoginRequest)) as
-                | Response
-                | MiddlewareErrorResponse);
+        const payload: GoogleAuthRequest = {
+          firstName,
+          lastName,
+          email,
+          photoURL: photoURL || "",
+          provider: "google",
+        };
+        const res = (await login(payload as GoogleAuthRequest)) as
+          | Response
+          | MiddlewareErrorResponse;
         // Check if 'error' property exists to determine the type
         if ("error" in res) {
           // 'res' is of type 'MiddlewareErrorResponse'
@@ -79,7 +61,6 @@ export function useFirebaseGmailAuth(authType: AuthType) {
         }
       }
     } catch (error) {
-      console.error("Error while login with google: ", error);
       // The AuthCredential type that was used.
       GoogleAuthProvider.credentialFromError(error as FirebaseError);
       setError(
@@ -90,5 +71,5 @@ export function useFirebaseGmailAuth(authType: AuthType) {
     }
   };
 
-  return { onRegister, isLoading, error };
+  return { onAuth, isLoading, error };
 }

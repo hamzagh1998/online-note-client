@@ -8,6 +8,10 @@ import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
 export function ResetPasswordFormComponent() {
   const navigate = useNavigate();
 
+  const redirections = {
+    login: "/auth" + AUTH_ROUTES.LOGIN,
+  };
+
   const [formValues, setFormValues] = useState({ email: "" });
 
   return (
@@ -24,7 +28,7 @@ export function ResetPasswordFormComponent() {
         >
           <span
             className="w-full font-bold text-lg text-skin-accent hover:opacity-90 cursor-pointer"
-            onClick={() => navigate(AUTH_ROUTES.LOGIN)}
+            onClick={() => navigate(redirections.login)}
           >
             &#60; Back
           </span>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
@@ -7,18 +6,15 @@ import { auth } from "../libs/firebase";
 
 import { MainRouter } from "./main.router";
 import { AuthRouter } from "./auth.router";
+import { NotFoundPage } from "../features/auth/pages/not-found.page";
 
-import { AUTH_ROUTES } from "./_routes-names";
+import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-names";
 
 import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
-
-import { RootState } from "../redux/store";
 
 export function RoutesNavigator() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const { userData } = useSelector((state: RootState) => state.auth);
 
   const [, setUserData] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -37,7 +33,7 @@ export function RoutesNavigator() {
       window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     prefersMode = isItDarkMode
-      ? "dark-theme bg-skin-fill-primary text-skin-base"
+      ? "light-theme bg-skin-fill-primary text-skin-base"
       : "light-theme bg-skin-fill-primary text-skin-base";
   }
 
@@ -68,27 +64,30 @@ export function RoutesNavigator() {
   if (mode && oobCode)
     localStorage.setItem("params", JSON.stringify({ mode, oobCode }));
 
+  const authDomain = "/auth";
+  const mainDomain = "/main";
+
   const authRoutes = [
-    AUTH_ROUTES.LOGIN,
-    AUTH_ROUTES.REGISTER,
-    AUTH_ROUTES.RESET_PWD,
-    AUTH_ROUTES.NEW_PWD,
+    authDomain + AUTH_ROUTES.LOGIN,
+    authDomain + AUTH_ROUTES.REGISTER,
+    authDomain + AUTH_ROUTES.RESET_PWD,
+    authDomain + AUTH_ROUTES.NEW_PWD,
   ];
   const mainRoutes = [
-    "/main/confirm-email",
-    "/main/notes",
-    "/main/note",
-    "/main/note-crud",
+    mainDomain + MAIN_REOTES.CONFIRM_EMAIL,
+    mainDomain + MAIN_REOTES.NOTES,
+    mainDomain + MAIN_REOTES.NOTE_DETAIL,
+    mainDomain + MAIN_REOTES.NOTE_CRUD,
   ];
 
   useEffect(() => {
     if (!isLoggedIn && !authRoutes.includes(currentPath))
-      navigate("/auth/login");
+      navigate(authRoutes[0]);
     else if (isLoggedIn) {
       if (!auth.currentUser?.emailVerified) {
-        navigate("/main/confirm-email");
+        navigate(mainRoutes[0]);
       } else if (!mainRoutes.includes(currentPath)) {
-        navigate("/main/notes");
+        navigate(mainRoutes[1]);
       }
     }
   }, [isLoggedIn, mode]);
@@ -98,7 +97,7 @@ export function RoutesNavigator() {
       <Routes>
         {isLoading ? (
           <Route path="/*" element={<SpinnerIndicatorsComponent />} />
-        ) : isLoggedIn && userData ? (
+        ) : isLoggedIn ? (
           <Route path="/main/*" element={<MainRouter />} />
         ) : (
           <Route path="/auth/*" element={<AuthRouter />} />
@@ -107,8 +106,4 @@ export function RoutesNavigator() {
       </Routes>
     </div>
   );
-}
-
-function NotFoundPage() {
-  return <div>404 - Page Not Found</div>;
 }

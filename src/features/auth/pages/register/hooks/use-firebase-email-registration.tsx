@@ -11,9 +11,9 @@ import { RegisterInputs, RegisterRequest } from "../../types";
 
 import { auth } from "../../../../../libs/firebase";
 
-import { useRegisterMutation } from "../../slices/api/auth.service";
+import { useRegisterMutation } from "../../../slices/api/auth.service";
 
-import { setUserData } from "../../slices/auth.slice";
+import { setUserData } from "../../../slices/auth.slice";
 
 import { Response } from "../../../../../common/types";
 
