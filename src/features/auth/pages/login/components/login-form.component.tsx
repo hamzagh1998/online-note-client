@@ -34,6 +34,7 @@ export function LoginFormComponent() {
   const redirections = {
     register: "/auth" + AUTH_ROUTES.REGISTER,
     forgetPwd: "/auth" + AUTH_ROUTES.RESET_PWD,
+    newPwd: "/auth" + AUTH_ROUTES.NEW_PWD,
   };
 
   const [isRequiredInputEmpty, setIsRequiredInputEmpty] = useState(false);
@@ -55,6 +56,17 @@ export function LoginFormComponent() {
     isLoading: isGoogleLoading,
     error: googleError,
   } = useFirebaseGmailAuth();
+
+  const params = JSON.parse(localStorage.getItem("params")!);
+
+  const mode: string | null = params ? params.mode : null;
+  const oobCode: string | null = params ? params.oobCode : null;
+
+  useEffect(() => {
+    if (oobCode && mode) {
+      if (mode === "resetPassword") navigate(redirections.newPwd);
+    }
+  }, [oobCode, mode]);
 
   useEffect(() => {
     const isValid = checkRequiredFields(formValues, ["email", "password"]);

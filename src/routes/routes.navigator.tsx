@@ -33,7 +33,7 @@ export function RoutesNavigator() {
       window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     prefersMode = isItDarkMode
-      ? "light-theme bg-skin-fill-primary text-skin-base"
+      ? "dark-theme bg-skin-fill-primary text-skin-base"
       : "light-theme bg-skin-fill-primary text-skin-base";
   }
 
@@ -55,15 +55,6 @@ export function RoutesNavigator() {
 
   const currentPath = location.pathname;
 
-  const url = new URL(window.location.href);
-  const urlParams = new URLSearchParams(url.search);
-
-  const mode = urlParams.get("mode");
-  const oobCode = urlParams.get("oobCode");
-
-  if (mode && oobCode)
-    localStorage.setItem("params", JSON.stringify({ mode, oobCode }));
-
   const authDomain = "/auth";
   const mainDomain = "/main";
 
@@ -79,6 +70,15 @@ export function RoutesNavigator() {
     mainDomain + MAIN_REOTES.NOTE_DETAIL,
     mainDomain + MAIN_REOTES.NOTE_CRUD,
   ];
+
+  const url = new URL(window.location.href);
+  const urlParams = new URLSearchParams(url.search);
+
+  const mode = urlParams.get("mode");
+  const oobCode = urlParams.get("oobCode");
+
+  if (mode && oobCode)
+    localStorage.setItem("params", JSON.stringify({ mode, oobCode }));
 
   useEffect(() => {
     if (!isLoggedIn && !authRoutes.includes(currentPath))

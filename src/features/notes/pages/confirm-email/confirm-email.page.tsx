@@ -4,12 +4,17 @@ import { applyActionCode, checkActionCode, signOut } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
 import { auth } from "../../../../libs/firebase";
+
+import { ErrorBannerComponent } from "../../../../common/components/banners/error-banner.component";
+
 import { MAIN_REOTES } from "../../../../routes/_routes-names";
+
+import emailLogo from "../../../../assets/email.png";
 
 export function ConfirmEmailPage() {
   const navigate = useNavigate();
 
-  const [error, setError] = useState<FirebaseError | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const params = JSON.parse(localStorage.getItem("params")!);
 
@@ -23,7 +28,8 @@ export function ConfirmEmailPage() {
         await applyActionCode(auth, oobCode!);
       }
     } catch (error) {
-      setError(error as FirebaseError); // Explicitly type error as FirebaseError
+      const firebaseError = error as FirebaseError;
+      setError(firebaseError.message);
     }
   };
 
@@ -39,14 +45,31 @@ export function ConfirmEmailPage() {
     try {
       await signOut(auth); // Await the signOut method
     } catch (error) {
-      setError(error as FirebaseError); // Explicitly type error as FirebaseError
+      const firebaseError = error as FirebaseError;
+      setError(firebaseError.message);
     }
   };
 
   return (
-    <div>
-      <button onClick={onSignOut}>Logout</button>
-      {error ? <p>{error.message}</p> : <></>}
+    <div className="w-screen h-screen flex justify-center items-center max-sm:p-6">
+      <div className="w-full h-full text-center lg:rounded-lg lg:w-1/2 lg:h-fit bg-skin-fill-secondary p-16">
+        {error ? <ErrorBannerComponent message={error} /> : <></>}
+        <img src={emailLogo} alt="email icon" className="w-[12rem] m-auto" />
+        <p className="font-bold lg:text-4xl text-xl mt-10">
+          Verification Email Sent!
+        </p>
+        <br />
+        <p className="text-sm lg:text-lg text-skin-muted underline">
+          kindly check your inbox in order to verify your account
+        </p>
+        <br />
+        <button
+          className="bg-skin-button-accent px-8 py-2 rounded-lg"
+          onClick={onSignOut}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

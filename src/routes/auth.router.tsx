@@ -14,7 +14,7 @@ export function AuthRouter() {
       <Route path={AUTH_ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={AUTH_ROUTES.RESET_PWD} element={<ResetPasswordPage />} />
       <Route path={AUTH_ROUTES.NEW_PWD} element={<NewPasswordPage />} />
-      <Route path="/auth" element={<Navigate to="/login" />} />
+      <Route path="/auth" element={<Navigate to={AUTH_ROUTES.LOGIN} />} />
     </Routes>
   );
 }
