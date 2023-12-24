@@ -9,4 +9,7 @@ export const firebaseConfig = {
   measurementId: import.meta.env.VITE_REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-export const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+export const apiBaseUrl =
+  import.meta.env.NODE_ENV === "development"
+    ? import.meta.env.VITE_REACT_APP_API_BASE_DEV_URL
+    : import.meta.env.VITE_REACT_APP_API_BASE_PRO_URL;
