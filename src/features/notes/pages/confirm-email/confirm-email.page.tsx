@@ -52,7 +52,7 @@ export function ConfirmEmailPage() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center max-sm:p-6">
-      <div className="w-full h-full text-center lg:rounded-lg lg:w-1/2 lg:h-fit bg-skin-fill-secondary p-16">
+      <div className="w-full text-center lg:rounded-lg lg:w-1/2 h-fit bg-skin-fill-secondary p-16">
         {error ? <ErrorBannerComponent message={error} /> : <></>}
         <img src={emailLogo} alt="email icon" className="w-[12rem] m-auto" />
         <p className="font-bold lg:text-4xl text-xl mt-10">
