@@ -47,8 +47,8 @@ export function LoginFormComponent() {
   const [showPwd, togglePwd] = useToggle(false);
 
   const { onLogin, isLoading, error } = useFirebaseEmailLogin({
-    email: formValues.email.value,
-    password: formValues.password.value,
+    email: formValues.email.value.toLowerCase().trim(),
+    password: formValues.password.value.toLowerCase().trim(),
   });
 
   const {

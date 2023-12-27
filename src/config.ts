@@ -10,6 +10,6 @@ export const firebaseConfig = {
 };
 
 export const apiBaseUrl =
-  import.meta.env.NODE_ENV === "development"
+  import.meta.env.MODE === "development"
     ? import.meta.env.VITE_REACT_APP_API_BASE_DEV_URL
     : import.meta.env.VITE_REACT_APP_API_BASE_PRO_URL;

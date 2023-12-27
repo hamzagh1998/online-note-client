@@ -102,7 +102,7 @@ export function NewPasswordFormComponent() {
       return setIsInputError(true);
     }
     if (!error && !isInputError && oobCode) {
-      changePwd(formValues.password.value, oobCode);
+      changePwd(formValues.password.value.toLowerCase().trim(), oobCode);
     }
   };
 

@@ -39,9 +39,9 @@ export function RegisterFormComponent() {
   const [showPwd, togglePwd] = useToggle(false);
 
   const { onRegister, isLoading, error } = useFirebaseEmailRegisteration({
-    firstName: formValues.firstName.value,
-    lastName: formValues.lastName.value,
-    email: formValues.email.value,
+    firstName: formValues.firstName.value.toLowerCase().trim(),
+    lastName: formValues.lastName.value.toLowerCase().trim(),
+    email: formValues.email.value.toLowerCase().trim(),
     password: formValues.password.value,
   });
 

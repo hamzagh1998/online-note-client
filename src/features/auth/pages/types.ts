@@ -43,3 +43,10 @@ export type GoogleAuthRequest = {
   photoURL?: string;
   provider: Provider;
 };
+
+export type AuthResponse = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  photoURL: string;
+};

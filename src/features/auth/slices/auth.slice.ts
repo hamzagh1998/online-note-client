@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export type AuthState = {
-  userData: null | object;
+  userData: null | {
+    firstName: string;
+    lastName: string;
+    email: string;
+    photoURL: string;
+  };
   fbToken: null | string;
 };
 
@@ -27,5 +32,3 @@ export const authSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { setUserData } = authSlice.actions;
-
-export default authSlice;

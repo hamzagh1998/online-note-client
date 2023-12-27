@@ -52,19 +52,19 @@ export function ConfirmEmailPage() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center max-sm:items-start max-sm:p-6">
-      <div className="w-full text-center lg:rounded-lg lg:w-1/2 h-fit bg-skin-fill-secondary p-16">
+      <div className="w-full text-center lg:rounded-lg lg:w-1/2 h-fit bg-skin-fill-secondary lg:p-16 p-6 shadow-sm">
         {error ? <ErrorBannerComponent message={error} /> : <></>}
         <img src={emailLogo} alt="email icon" className="w-[12rem] m-auto" />
-        <p className="font-bold lg:text-4xl text-xl mt-10">
+        <p className="font-bold lg:text-4xl text-lg mt-10">
           Verification Email Sent!
         </p>
         <br />
-        <p className="text-sm lg:text-lg text-skin-muted underline">
+        <p className="text-xs lg:text-lg text-skin-muted underline">
           kindly check your inbox in order to verify your account
         </p>
         <br />
         <button
-          className="bg-skin-button-accent px-8 py-2 rounded-lg"
+          className="bg-skin-button-accent px-8 py-2 rounded-lg text-white"
           onClick={onSignOut}
         >
           Logout

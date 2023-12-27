@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import { User, onAuthStateChanged } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+
+import { setUserData } from "../features/auth/slices/auth.slice";
+
+import { useAuthQuery } from "../features/auth/slices/api/auth.service";
 
 import { auth } from "../libs/firebase";
 
@@ -11,12 +16,17 @@ import { NotFoundPage } from "../features/auth/pages/not-found.page";
 import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-names";
 
 import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
+import { AuthResponse } from "../features/auth/pages/types";
 
 export function RoutesNavigator() {
   const location = useLocation();
+
   const navigate = useNavigate();
 
-  const [, setUserData] = useState<User | null>(null);
+  const dispatch = useDispatch();
+
+  const { refetch } = useAuthQuery({});
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,11 +48,18 @@ export function RoutesNavigator() {
   }
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
-        setUserData(user);
+        const fbToken = await user.getIdToken();
+        dispatch(setUserData({ fbToken, userData: null }));
+        const res = await refetch();
+        if (!res.data.error) {
+          dispatch(
+            setUserData({ fbToken, userData: res.data.detail as AuthResponse })
+          );
+        }
         setIsLoggedIn(true);
         // ...
       } else {

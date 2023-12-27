@@ -10,6 +10,13 @@ import { authEndpoints } from "./auth-endpoints";
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
+    auth: build.query({
+      query: () => ({
+        url: authEndpoints.AUTH,
+        method: "GET",
+      }),
+    }),
+
     login: build.mutation({
       query: (payload: LoginRequest) => ({
         url: authEndpoints.LOGIN,
@@ -37,6 +44,8 @@ export const authApi = api.injectEndpoints({
 });
 
 export const {
+  useLazyAuthQuery,
+  useAuthQuery,
   useLoginMutation,
   useRegisterMutation,
   useResetPasswordMutation,
