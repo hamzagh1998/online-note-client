@@ -35,7 +35,7 @@ export function RoutesNavigator() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const theme = JSON.parse(localStorage.getItem("theme") || "");
+    const theme = JSON.parse(localStorage.getItem("theme") || "null");
     if (theme) setPreferdUserTheme(theme);
     // check user auth
     onAuthStateChanged(auth, async (user) => {
