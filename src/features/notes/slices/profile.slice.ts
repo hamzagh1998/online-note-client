@@ -8,6 +8,7 @@ export type ProfileState = {
   subscriptionEndDate: null | Date;
   subscriptionLastRenewalDate: null | Date;
   storgeUsageInMb: number;
+  preferdTheme: "dark" | "light" | "default";
 };
 
 const initialState: ProfileState = {
@@ -17,6 +18,7 @@ const initialState: ProfileState = {
   subscriptionEndDate: null,
   subscriptionLastRenewalDate: null,
   storgeUsageInMb: 0,
+  preferdTheme: "default",
 };
 
 export const profileSlice = createSlice({
@@ -33,6 +35,7 @@ export const profileSlice = createSlice({
           subscriptionEndDate,
           subscriptionLastRenewalDate,
           storgeUsageInMb,
+          preferdTheme,
         },
       }: PayloadAction<ProfileState>
     ) => {
@@ -42,6 +45,7 @@ export const profileSlice = createSlice({
       state.subscriptionEndDate = subscriptionEndDate;
       state.subscriptionLastRenewalDate = subscriptionLastRenewalDate;
       state.storgeUsageInMb = storgeUsageInMb;
+      state.preferdTheme = preferdTheme;
     },
   },
 });

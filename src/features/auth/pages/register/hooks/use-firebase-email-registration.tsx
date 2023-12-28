@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
-import { RegisterInputs, RegisterRequest } from "../../types";
+import { AuthResponse, RegisterInputs, RegisterRequest } from "../../types";
 
 import { auth } from "../../../../../libs/firebase";
 
@@ -67,7 +67,7 @@ export function useFirebaseEmailRegisteration(inputsInfo: RegisterInputs) {
                 // save user data
                 setUserData({
                   fbToken: userFbToken,
-                  userData: res.data.detail,
+                  userData: res.data.detail as AuthResponse,
                 })
               );
             }

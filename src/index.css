@@ -50,6 +50,8 @@
     --color-button-inverted: 238, 238, 238;
     --color-button-accent: 0, 173, 181;
 
+    --color-border-primary: 238, 238, 238;
+    --color-border-secondary: 255, 255, 255;
     --color-border-accent: 0, 173, 181;
     --color-border-error: 239, 68, 68;
   }
@@ -67,6 +69,8 @@
     --color-button-inverted: 34, 40, 49;
     --color-button-accent: 0, 173, 181;
 
+    --color-border-primary: 34, 40, 49;
+    --color-border-secondary: 41, 48, 59;
     --color-border-accent: 0, 173, 181;
     --color-border-error: 239, 68, 68;
   }

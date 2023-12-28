@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+import plugin from "tailwindcss-gradients";
+
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
@@ -44,6 +46,8 @@ export default {
       },
       borderColor: {
         skin: {
+          primary: withOpacity("--color-border-primary"),
+          secondary: withOpacity("--color-border-secondary"),
           accent: withOpacity("--color-border-accent"),
           error: withOpacity("--color-border-error"),
         },
@@ -58,5 +62,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [plugin],
 };

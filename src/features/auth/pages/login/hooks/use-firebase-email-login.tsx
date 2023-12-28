@@ -9,7 +9,7 @@ import { auth } from "../../../../../libs/firebase";
 
 import { setUserData } from "../../../slices/auth.slice";
 
-import { LoginInputs, LoginRequest } from "../../types";
+import { AuthResponse, LoginInputs, LoginRequest } from "../../types";
 import { Response } from "../../../../../common/types";
 
 export function useFirebaseEmailLogin(inputsInfo: LoginInputs) {
@@ -52,7 +52,7 @@ export function useFirebaseEmailLogin(inputsInfo: LoginInputs) {
             // save user data
             setUserData({
               fbToken: userFbToken,
-              userData: res.data.detail,
+              userData: res.data.detail as AuthResponse,
             })
           );
         }

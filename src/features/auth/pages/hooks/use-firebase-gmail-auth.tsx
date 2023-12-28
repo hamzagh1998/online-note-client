@@ -9,7 +9,7 @@ import { auth, googleProvider } from "../../../../libs/firebase";
 
 import { setUserData } from "../../slices/auth.slice";
 
-import { GoogleAuthRequest } from "../types";
+import { AuthResponse, GoogleAuthRequest } from "../types";
 
 import { MiddlewareErrorResponse, Response } from "../../../../common/types";
 
@@ -55,7 +55,7 @@ export function useFirebaseGmailAuth() {
           if (res.data.error) {
             if (user) await deleteUser(auth.currentUser!);
           } else {
-            const userData = res.data.detail || null;
+            const userData = res.data.detail as AuthResponse;
             dispatch(setUserData({ fbToken: userFbToken, userData }));
           }
         }

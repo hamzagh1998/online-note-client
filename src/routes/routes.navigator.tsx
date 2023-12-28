@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import { setUserData } from "../features/auth/slices/auth.slice";
 
-import { useAuthQuery } from "../features/auth/slices/api/auth.service";
+import { useLazyAuthQuery } from "../features/auth/slices/api/auth.service";
 
 import { auth } from "../libs/firebase";
 
 import { MainRouter } from "./main.router";
 import { AuthRouter } from "./auth.router";
 import { NotFoundPage } from "../features/auth/pages/not-found.page";
+
+import { RootState } from "../redux/store";
 
 import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-names";
 
@@ -24,37 +26,25 @@ export function RoutesNavigator() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const { preferdTheme } = useSelector((store: RootState) => store.profile);
 
-  const { refetch } = useAuthQuery({});
+  const [trigger] = useLazyAuthQuery({});
 
+  const [preferdUserTheme, setPreferdUserTheme] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  let prefersMode: string;
-  const theme = localStorage.getItem("theme");
-  if (theme) {
-    prefersMode =
-      theme === "dark"
-        ? "dark-theme bg-skin-fill-primary text-skin-base"
-        : "light-theme bg-skin-fill-primary text-skin-base";
-  } else {
-    const isItDarkMode =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    prefersMode = isItDarkMode
-      ? "dark-theme bg-skin-fill-primary text-skin-base"
-      : "light-theme bg-skin-fill-primary text-skin-base";
-  }
-
   useEffect(() => {
+    const theme = JSON.parse(localStorage.getItem("theme") || "");
+    if (theme) setPreferdUserTheme(theme);
+    // check user auth
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const fbToken = await user.getIdToken();
         dispatch(setUserData({ fbToken, userData: null }));
-        const res = await refetch();
+        const res = await trigger({});
         if (!res.data.error) {
           dispatch(
             setUserData({ fbToken, userData: res.data.detail as AuthResponse })
@@ -69,6 +59,39 @@ export function RoutesNavigator() {
       setIsLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (preferdTheme === "dark") {
+      setPreferdUserTheme("dark-theme bg-skin-fill-primary text-skin-base");
+      localStorage.setItem(
+        "theme",
+        JSON.stringify("dark-theme bg-skin-fill-primary text-skin-base")
+      );
+    } else if (preferdTheme === "light") {
+      setPreferdUserTheme("light-theme bg-skin-fill-primary text-skin-base");
+      localStorage.setItem(
+        "theme",
+        JSON.stringify("light-theme bg-skin-fill-primary text-skin-base")
+      );
+    } else if (preferdTheme === "default") {
+      const isItDarkMode =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (isItDarkMode) {
+        setPreferdUserTheme("dark-theme bg-skin-fill-primary text-skin-base");
+        localStorage.setItem(
+          "theme",
+          JSON.stringify("dark-theme bg-skin-fill-primary text-skin-base")
+        );
+      } else {
+        setPreferdUserTheme("light-theme bg-skin-fill-primary text-skin-base");
+        localStorage.setItem(
+          "theme",
+          JSON.stringify("light-theme bg-skin-fill-primary text-skin-base")
+        );
+      }
+    }
+  }, [preferdTheme]);
 
   const currentPath = location.pathname;
 
@@ -110,7 +133,7 @@ export function RoutesNavigator() {
   }, [isLoggedIn, mode]);
 
   return (
-    <div className={prefersMode}>
+    <div className={preferdUserTheme}>
       <Routes>
         {isLoading ? (
           <Route path="/*" element={<SpinnerIndicatorsComponent />} />
