@@ -79,10 +79,9 @@ export function ProfileHeaderDropdownComponent({
             {capitalizer(plan || "")}
           </p>
         </div>
-        <p className="text-xs text-skin-muted">{email}</p>
-        <br />
+        <p className="text-xs text-skin-muted mb-4">{email}</p>
         {!isPremium ? (
-          <div className="w-full px-2 py-1 rounded-full flex justify-center items-center bg-gradient-to-r from-pink-500 to-purple-700 animate-pulse hover:from-pink-600 hover:to-purple-800 hover:animate-none cursor-pointer">
+          <div className="w-full px-2 py-1 rounded-full mb-4 flex justify-center items-center bg-gradient-to-r from-pink-500 to-purple-700 animate-pulse hover:from-pink-600 hover:to-purple-800 hover:animate-none cursor-pointer">
             <WiStars className="text-orange-300" size={26} />
             <p className="text-md text-white">Go premium</p>
             <WiStars className="text-orange-300" size={26} />
@@ -90,7 +89,6 @@ export function ProfileHeaderDropdownComponent({
         ) : (
           <></>
         )}
-        <br />
         <div
           className={`flex justify-between items-center gap-2 w-full ${
             isThemeOpen ? "text-skin-accent" : null

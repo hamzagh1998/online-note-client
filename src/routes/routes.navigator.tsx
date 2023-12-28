@@ -142,7 +142,12 @@ export function RoutesNavigator() {
         ) : (
           <Route path="/auth/*" element={<AuthRouter />} />
         )}
-        <Route path="*" element={<NotFoundPage />} />
+        {!authRoutes.includes(currentPath) &&
+        !mainRoutes.includes(currentPath) ? (
+          <Route path="*" element={<NotFoundPage />} />
+        ) : (
+          <></>
+        )}
       </Routes>
     </div>
   );
