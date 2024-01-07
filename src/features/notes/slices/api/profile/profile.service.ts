@@ -10,6 +10,13 @@ export const profileApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    notification: build.mutation({
+      query: (payload) => ({
+        url: profileEndpoints.NOTIF,
+        method: "PATCH",
+        body: payload,
+      }),
+    }),
     update: build.mutation({
       query: (payload) => ({
         url: profileEndpoints.INFO,
@@ -20,4 +27,9 @@ export const profileApi = api.injectEndpoints({
   }),
 });
 
-export const { useInfoQuery, useLazyInfoQuery, useUpdateMutation } = profileApi;
+export const {
+  useInfoQuery,
+  useLazyInfoQuery,
+  useNotificationMutation,
+  useUpdateMutation,
+} = profileApi;

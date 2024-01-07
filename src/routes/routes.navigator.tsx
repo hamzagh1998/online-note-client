@@ -4,8 +4,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import { setUserData } from "../features/auth/slices/auth.slice";
+import { setUserProfile } from "../features/notes/slices/profile.slice";
 
 import { useLazyAuthQuery } from "../features/auth/slices/api/auth.service";
+import { useLazyInfoQuery } from "../features/notes/slices/api/profile/profile.service";
 
 import { auth } from "../libs/firebase";
 
@@ -19,6 +21,7 @@ import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-names";
 
 import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
 import { AuthResponse } from "../features/auth/pages/types";
+import { ProfileResponse } from "../features/notes/pages/types";
 
 export function RoutesNavigator() {
   const location = useLocation();
@@ -26,17 +29,26 @@ export function RoutesNavigator() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { preferdTheme } = useSelector((store: RootState) => store.profile);
 
-  const [trigger] = useLazyAuthQuery({});
+  const authData = useSelector((store: RootState) => store.auth);
+  const profile = useSelector((store: RootState) => store.profile);
+
+  const { preferdTheme } = profile;
+  const { userData } = authData;
+
+  const [getUserData] = useLazyAuthQuery({});
+  const [getProfileData] = useLazyInfoQuery({});
 
   const [preferdUserTheme, setPreferdUserTheme] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const theme = JSON.parse(localStorage.getItem("theme") || "null");
-    if (theme) setPreferdUserTheme(theme);
+    const theme = JSON.parse(localStorage.getItem("theme") as string);
+    if (theme)
+      dispatch(
+        setUserProfile({ ...profile, preferdTheme: theme ? theme : "default" })
+      );
     // check user auth
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -44,14 +56,13 @@ export function RoutesNavigator() {
         // https://firebase.google.com/docs/reference/js/auth.user
         const fbToken = await user.getIdToken();
         dispatch(setUserData({ fbToken, userData: null }));
-        const res = await trigger({});
+        const res = await getUserData({});
         if (!res.data.error) {
           dispatch(
             setUserData({ fbToken, userData: res.data.detail as AuthResponse })
           );
         }
         setIsLoggedIn(true);
-        // ...
       } else {
         // User is signed out
         setIsLoggedIn(false);
@@ -61,34 +72,39 @@ export function RoutesNavigator() {
   }, []);
 
   useEffect(() => {
+    if (!userData) return;
+    (async () => {
+      const res = await getProfileData({});
+
+      if (!res.data.error) {
+        const data: ProfileResponse = res.data.detail;
+        dispatch(
+          setUserProfile({
+            ...data,
+            preferdTheme,
+          })
+        );
+      }
+    })();
+  }, [userData]);
+
+  useEffect(() => {
     if (preferdTheme === "dark") {
       setPreferdUserTheme("dark-theme bg-skin-fill-primary text-skin-base");
-      localStorage.setItem(
-        "theme",
-        JSON.stringify("dark-theme bg-skin-fill-primary text-skin-base")
-      );
+      localStorage.setItem("theme", JSON.stringify("dark"));
     } else if (preferdTheme === "light") {
       setPreferdUserTheme("light-theme bg-skin-fill-primary text-skin-base");
-      localStorage.setItem(
-        "theme",
-        JSON.stringify("light-theme bg-skin-fill-primary text-skin-base")
-      );
+      localStorage.setItem("theme", JSON.stringify("light"));
     } else if (preferdTheme === "default") {
       const isItDarkMode =
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (isItDarkMode) {
         setPreferdUserTheme("dark-theme bg-skin-fill-primary text-skin-base");
-        localStorage.setItem(
-          "theme",
-          JSON.stringify("dark-theme bg-skin-fill-primary text-skin-base")
-        );
+        localStorage.setItem("theme", JSON.stringify("default"));
       } else {
         setPreferdUserTheme("light-theme bg-skin-fill-primary text-skin-base");
-        localStorage.setItem(
-          "theme",
-          JSON.stringify("light-theme bg-skin-fill-primary text-skin-base")
-        );
+        localStorage.setItem("theme", JSON.stringify("default"));
       }
     }
   }, [preferdTheme]);

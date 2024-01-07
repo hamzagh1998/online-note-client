@@ -34,6 +34,5 @@ const baseQueryWithRetry = retry(baseQuery, { maxRetries: 3 });
 export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRetry,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   endpoints: () => ({}), // Add your endpoints here
 });

@@ -26,7 +26,6 @@ export function useFirebaseEmailLogin(inputsInfo: LoginInputs) {
     try {
       const { email, password } = inputsInfo;
       const data = await signInWithEmailAndPassword(auth, email, password);
-      console.log("data", data);
       if (data.user && data.user.providerData && data.user.providerData[0]) {
         const userFbToken = await data.user.getIdToken(); // Get the Firebase ID token
         const payload: LoginRequest = {
@@ -61,7 +60,6 @@ export function useFirebaseEmailLogin(inputsInfo: LoginInputs) {
       const firebaseError = error as FirebaseError;
       const errorCode = firebaseError.code;
       const errorType = errorCode.split("/")[1];
-      console.log("errorType", errorType);
 
       const invalidCredentials = "Invalid login credentials!";
       const emailError =

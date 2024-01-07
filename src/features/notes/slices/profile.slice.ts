@@ -1,14 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+export type Notification = {
+  id: string;
+  title: string;
+  content: string;
+  userPhoto: string | null;
+  link: string | null;
+};
+
 export type ProfileState = {
   plan: string;
   isPremium: boolean;
-  subscriptionStartDate: null;
-  subscriptionEndDate: null | Date;
-  subscriptionLastRenewalDate: null | Date;
+  subscriptionStartDate: Date | null;
+  subscriptionEndDate: Date | null;
+  subscriptionLastRenewalDate: Date | null;
   storgeUsageInMb: number;
-  preferdTheme: "dark" | "light" | "default";
+  notifications: Array<Notification>;
+  preferdTheme: "dark" | "light" | "default" | null;
 };
 
 const initialState: ProfileState = {
@@ -18,7 +27,8 @@ const initialState: ProfileState = {
   subscriptionEndDate: null,
   subscriptionLastRenewalDate: null,
   storgeUsageInMb: 0,
-  preferdTheme: "default",
+  notifications: [],
+  preferdTheme: null,
 };
 
 export const profileSlice = createSlice({
@@ -35,6 +45,7 @@ export const profileSlice = createSlice({
           subscriptionEndDate,
           subscriptionLastRenewalDate,
           storgeUsageInMb,
+          notifications,
           preferdTheme,
         },
       }: PayloadAction<ProfileState>
@@ -46,6 +57,7 @@ export const profileSlice = createSlice({
       state.subscriptionLastRenewalDate = subscriptionLastRenewalDate;
       state.storgeUsageInMb = storgeUsageInMb;
       state.preferdTheme = preferdTheme;
+      state.notifications = notifications;
     },
   },
 });

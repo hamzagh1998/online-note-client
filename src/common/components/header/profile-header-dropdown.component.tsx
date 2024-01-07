@@ -6,7 +6,7 @@ import { IoMdSettings } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
 import { CgDarkMode } from "react-icons/cg";
 import { MdDarkMode } from "react-icons/md";
-import { IoSunny } from "react-icons/io5";
+import { IoFlagSharp, IoSunny } from "react-icons/io5";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 
 import { setUserProfile } from "../../../features/notes/slices/profile.slice";
@@ -41,13 +41,13 @@ export function ProfileHeaderDropdownComponent({
 
   const onChangeTheme = (theme: "default" | "dark" | "light") => {
     dispatch(setUserProfile({ ...userProfile, preferdTheme: theme }));
+    localStorage.setItem("theme", JSON.stringify(theme));
   };
 
   const onSignOut = async () => {
     try {
       signOut(auth);
     } catch (error) {
-      console.log(error);
       alert("Ooops, Unexpected error!");
     }
   };
@@ -60,7 +60,7 @@ export function ProfileHeaderDropdownComponent({
       }}
     >
       <div
-        className="border rounded-md border-skin-accent bg-skin-fill-secondary p-4 w-1/6 max-md:w-1/3 max-sm:w-screen max-sm:m-0 max-sm:right-0 max-sm:top-16 flex justify-center items-center flex-col absolute right-5 top-20 z-20"
+        className="border rounded-lg border-skin-accent shadow-md bg-skin-fill-secondary p-4 w-1/6 max-md:w-1/3 max-sm:w-[95%] max-sm:m-auto max-sm:right-[2.5%] max-sm:top-16 flex justify-center items-center flex-col absolute right-5 top-20 z-20"
         onMouseLeave={() => setDropdownVisible(false)}
         onClick={(e) => e.stopPropagation()}
       >
@@ -105,7 +105,11 @@ export function ProfileHeaderDropdownComponent({
             )}
             <p>
               {capitalizer(
-                preferdTheme === "default" ? "device" : preferdTheme
+                preferdTheme
+                  ? preferdTheme === "default"
+                    ? "device"
+                    : preferdTheme
+                  : "device"
               )}
               &ensp;Theme
             </p>
@@ -143,16 +147,20 @@ export function ProfileHeaderDropdownComponent({
                 </div>
               </div>
             </div>
-            <div className="h-[1px] w-full rounded-full bg-gradient-to-r from-gray-500 to-gray-700 my-4 "></div>
+            <div className="h-[1px] w-full rounded-full bg-gradient-to-r from-gray-500 to-gray-700 my-4"></div>
           </>
         ) : (
           <></>
         )}
-        <div className="flex justify-start items-center gap-2 w-full hover:text-skin-accent cursor-pointer ">
+        <div className="flex justify-start items-center gap-2 w-full hover:text-skin-accent cursor-pointer mb-2">
           <IoMdSettings size={20} />
           <p>Account Settings</p>
         </div>
-        <div className="h-[1px] w-full rounded-full bg-gradient-to-r from-gray-500 to-gray-700 my-4 "></div>
+        <div className="flex justify-start items-center gap-2 w-full hover:text-skin-accent cursor-pointer">
+          <IoFlagSharp size={20} />
+          <p>Report issue/Feedback</p>
+        </div>
+        <div className="h-[1px] w-full rounded-full bg-gradient-to-r from-gray-500 to-gray-700 my-4"></div>
         <div
           className="flex justify-start items-center gap-2 w-full hover:text-skin-error cursor-pointer"
           onClick={onSignOut}
