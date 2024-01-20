@@ -16,3 +16,9 @@ export type ProfileResponse = {
   storgeUsageInMb: number;
   notifications: Array<Notification>;
 };
+
+export type createFolderRequest = {
+  name: string;
+  password: string | null;
+  parentDirectory: string;
+};

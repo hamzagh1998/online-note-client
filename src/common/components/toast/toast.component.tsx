@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 type Props = {
   message: string;
   type: "success" | "error" | "warn" | "info";
-  positition:
+  positition?:
     | "TOP_CENTER"
     | "TOP_LEFT"
     | "TOP_RIGHT"
@@ -20,7 +20,7 @@ type Props = {
 export function ToastComponent({
   message,
   type,
-  positition,
+  positition = "BOTTOM_RIGHT",
   className,
   icon,
 }: Props) {

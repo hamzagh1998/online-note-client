@@ -1,4 +1,5 @@
 import { api } from "../../../../../redux/api";
+import { createFolderRequest } from "../../../pages/types";
 
 import { folderEndpoints } from "./folder-endpoints";
 
@@ -11,7 +12,7 @@ export const folderApi = api.injectEndpoints({
       }),
     }),
     createFolder: build.mutation({
-      query: (payload) => ({
+      query: (payload: createFolderRequest) => ({
         url: folderEndpoints.CREATE_FOLDER,
         method: "POST",
         body: payload,

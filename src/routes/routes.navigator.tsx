@@ -95,7 +95,7 @@ export function RoutesNavigator() {
     } else if (preferdTheme === "light") {
       setPreferdUserTheme("light-theme bg-skin-fill-primary text-skin-base");
       localStorage.setItem("theme", JSON.stringify("light"));
-    } else if (preferdTheme === "default") {
+    } else {
       const isItDarkMode =
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches;

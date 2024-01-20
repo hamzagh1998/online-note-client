@@ -5,7 +5,7 @@ type IconPosition = "left" | "right";
 type AutoComplete = "on" | "off";
 
 interface IProps {
-  type: InputType;
+  type?: InputType;
   value: string;
   setValue: (e: string) => void;
   label?: string;
