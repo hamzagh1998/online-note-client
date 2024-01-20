@@ -12,6 +12,12 @@ export type Notification = {
 export type ProfileState = {
   plan: string;
   isPremium: boolean;
+  currentFolder: {
+    id: string;
+    folderName: string;
+    parentDirectory: string | null;
+    children: Array<string> | [];
+  };
   subscriptionStartDate: Date | null;
   subscriptionEndDate: Date | null;
   subscriptionLastRenewalDate: Date | null;
@@ -23,6 +29,12 @@ export type ProfileState = {
 const initialState: ProfileState = {
   plan: "free",
   isPremium: false,
+  currentFolder: {
+    id: "",
+    folderName: "",
+    parentDirectory: null,
+    children: [],
+  },
   subscriptionStartDate: null,
   subscriptionEndDate: null,
   subscriptionLastRenewalDate: null,
@@ -41,6 +53,7 @@ export const profileSlice = createSlice({
         payload: {
           plan,
           isPremium,
+          currentFolder,
           subscriptionStartDate,
           subscriptionEndDate,
           subscriptionLastRenewalDate,
@@ -52,6 +65,7 @@ export const profileSlice = createSlice({
     ) => {
       state.plan = plan;
       state.isPremium = isPremium;
+      state.currentFolder = { ...currentFolder };
       state.subscriptionStartDate = subscriptionStartDate;
       state.subscriptionEndDate = subscriptionEndDate;
       state.subscriptionLastRenewalDate = subscriptionLastRenewalDate;

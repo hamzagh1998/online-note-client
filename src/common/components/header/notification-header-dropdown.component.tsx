@@ -1,4 +1,4 @@
-import { FaRegEye } from "react-icons/fa6";
+import { FaInbox, FaRegEye } from "react-icons/fa6";
 
 import { Notification } from "../../../features/notes/slices/profile.slice";
 
@@ -61,6 +61,12 @@ export function NotificationHeaderDropdownComponent({
             </p>
           </div>
         ))}
+        {!notifications.length ? (
+          <div className="flex flex-col items-center h-full w-full text-gray-500 opacity-50 text-sm">
+            <FaInbox size={86} />
+            Empty
+          </div>
+        ) : null}
       </div>
     </div>
   );

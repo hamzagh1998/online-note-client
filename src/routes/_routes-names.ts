@@ -7,7 +7,7 @@ export const AUTH_ROUTES = {
 
 export const MAIN_REOTES = {
   CONFIRM_EMAIL: "/confirm-email",
-  NOTES: "/notes",
+  NOTES: "/folder",
   NOTE_DETAIL: "/note/:id",
   NOTE_CRUD: "/note-crud/:operation",
 };

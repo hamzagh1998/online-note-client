@@ -101,7 +101,7 @@ export function HeaderComponent({ isLoading = false }) {
               <main className="flex justify-between gap-3 items-center max-sm:hidden">
                 <div
                   className="relative p-2  border-2 rounded-full cursor-pointer"
-                  onMouseOver={() => setNotifVisible(true)}
+                  onClick={() => setNotifVisible(true)}
                 >
                   {userProfile.notifications.length ? (
                     <div className="absolute top-1 right-1 p-[2px] bg-pink-500 rounded-full h-[14px] w-[14px] text-[12px] font-extrabold text-white flex justify-center items-center">
@@ -113,7 +113,7 @@ export function HeaderComponent({ isLoading = false }) {
                   <IoMdNotifications className="text-gray-400" size={26} />
                 </div>
                 <img
-                  onMouseOver={() => setDropdownVisible(true)}
+                  onClick={() => setDropdownVisible(true)}
                   className="rounded-full w-11 cursor-pointer"
                   src={user.photoURL || ""}
                   alt="user img"
