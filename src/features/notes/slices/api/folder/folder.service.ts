@@ -6,8 +6,8 @@ import { folderEndpoints } from "./folder-endpoints";
 export const folderApi = api.injectEndpoints({
   endpoints: (build) => ({
     folderData: build.query({
-      query: () => ({
-        url: folderEndpoints.GET_FOLDER_DATA,
+      query: (gItemId: string) => ({
+        url: folderEndpoints.GET_FOLDER_DATA + "?gItemId=" + gItemId,
         method: "GET",
       }),
     }),

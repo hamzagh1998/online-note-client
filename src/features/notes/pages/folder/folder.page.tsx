@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import { FaFolderOpen } from "react-icons/fa6";
 import { useSelector } from "react-redux";
@@ -13,10 +13,18 @@ import { ToastComponent } from "../../../../common/components/toast/toast.compon
 
 import { useCreateFolder } from "./hooks/use-create-folder";
 
-import { FolderData } from "./types";
+import { FolderData, FolderDataResponse } from "./types";
+import { useGetFolderData } from "./hooks/use-get-folder-data";
 
 export function FilePage() {
+  const userProfile = useSelector((store: RootState) => store.profile);
+
   const { onAddFolder, isLoading, error } = useCreateFolder();
+  const {
+    onGetFolderData,
+    isLoading: isLoading2,
+    error: error2,
+  } = useGetFolderData(userProfile.currentFolder.id);
 
   const { currentFolder } = useSelector((store: RootState) => store.profile);
 
@@ -28,7 +36,12 @@ export function FilePage() {
   });
   const [isPrivate, setIsPrivate] = useState(false);
 
-  //console.log(currentFolder);
+  const [folderInfo, setFolderInfo] = useState<null | FolderDataResponse>();
+
+  useEffect(() => {
+    if (!currentFolder.id.length) return;
+    onGetFolderData(setFolderInfo);
+  }, [currentFolder]);
 
   return (
     <div className="h-screen overflow-x-hidden">
@@ -65,6 +78,7 @@ export function FilePage() {
         ) : null}
       </section>
       {error ? <ToastComponent type="error" message={error} /> : null}
+      {error2 ? <ToastComponent type="error" message={error2} /> : null}
     </div>
   );
 }

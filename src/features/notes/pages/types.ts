@@ -1,5 +1,9 @@
 import { Notification } from "../slices/profile.slice";
 
+export type ParentDirectory = {
+  id: string;
+  name: string;
+};
 // profile info
 export type ProfileResponse = {
   plan: "free" | "premium";
@@ -7,7 +11,7 @@ export type ProfileResponse = {
   currentFolder: {
     id: string;
     folderName: string;
-    parentDirectory: string | null;
+    parentDirectory: ParentDirectory | null;
     children: Array<string> | [];
   };
   subscriptionStartDate: Date | null;

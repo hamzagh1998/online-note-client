@@ -12,7 +12,10 @@ import { SpinnerIndicatorsComponent } from "../activities-indicators/spinner-ind
 
 import { NotificationHeaderDropdownComponent } from "./notification-header-dropdown.component";
 
-import { useNotificationMutation } from "../../../features/notes/slices/api/profile/profile.service";
+import {
+  useLazyInfoQuery,
+  useNotificationMutation,
+} from "../../../features/notes/slices/api/profile/profile.service";
 
 import { setUserProfile } from "../../../features/notes/slices/profile.slice";
 
@@ -20,6 +23,7 @@ import { Response } from "../../types";
 
 import logo from "../../../assets/logo-icon.png";
 import { ToastComponent } from "../toast/toast.component";
+import { ProfileResponse } from "../../../features/notes/pages/types";
 
 export type User = {
   firstName: null | string;
@@ -31,6 +35,8 @@ export type User = {
 };
 
 export function HeaderComponent({ isLoading = false }) {
+  const [getProfileData] = useLazyInfoQuery({});
+
   const dispatch = useDispatch();
 
   const userData = useSelector((store: RootState) => store.auth.userData);
@@ -63,6 +69,14 @@ export function HeaderComponent({ isLoading = false }) {
     });
   }, [userData, userProfile]);
 
+  const onGetRootFolder = async () => {
+    const res = await getProfileData({});
+    if (!res.data.error) {
+      const data: ProfileResponse = res.data.detail;
+      dispatch(setUserProfile({ ...userProfile, ...data }));
+    }
+  };
+
   const onSeeNotif = async (payload: Array<string>) => {
     try {
       const res = (await updateNotification(payload)) as Response;
@@ -91,7 +105,10 @@ export function HeaderComponent({ isLoading = false }) {
           <nav>
             <section className="h-20 max-sm:h-14 w-ful flex items-center justify-between">
               {/* brand name and logo */}
-              <main className="w-fit h-fit flex justify-center items-center cursor-pointer">
+              <main
+                className="w-fit h-fit flex justify-center items-center cursor-pointer"
+                onClick={onGetRootFolder}
+              >
                 <img src={logo} className="w-16 max-sm:w-12" alt="Logo" />
                 <p className="text-4xl max-sm:text-2xl font-bold font-pacifico text-skin-accent">
                   OnlineNote

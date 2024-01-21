@@ -44,7 +44,7 @@ export function AddFolderModal({
           },
         });
       }
-      if (folderData.password.value.length) {
+      if (folderData.password.value.length < 4) {
         return setFolderData({
           ...folderData,
           password: {

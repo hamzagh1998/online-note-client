@@ -17,7 +17,6 @@ export function useCreateFolder() {
     setIsLoading(true);
     try {
       const res = (await createFolder(payload)) as Response;
-      console.log("res: ", res);
       if (res.data.error)
         return setError("Ooops, something went wrong while creating folder!");
     } catch (error) {

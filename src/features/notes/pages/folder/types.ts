@@ -8,3 +8,10 @@ export type FolderData = {
     error: null | string;
   };
 };
+
+export type FolderDataResponse = {
+  children: Array<object>;
+  folderName: string;
+  id: string;
+  parentDirectory: string | null;
+};

@@ -9,13 +9,18 @@ export type Notification = {
   link: string | null;
 };
 
+export type ParentDirectory = {
+  id: string;
+  name: string;
+};
+
 export type ProfileState = {
   plan: string;
   isPremium: boolean;
   currentFolder: {
     id: string;
     folderName: string;
-    parentDirectory: string | null;
+    parentDirectory: ParentDirectory | null;
     children: Array<string> | [];
   };
   subscriptionStartDate: Date | null;
