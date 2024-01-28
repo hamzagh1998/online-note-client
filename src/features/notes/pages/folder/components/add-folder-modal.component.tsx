@@ -68,15 +68,15 @@ export function AddFolderModal({
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center backdrop-filter backdrop-blur-md">
+    <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center backdrop-filter backdrop-blur-md z-50">
       <div className="flex flex-col py-10 px-16 w-fit h-fit rounded-md bg-skin-fill-secondary shadow-lg max-sm:h-full max-sm:w-full">
         <div className="inline-block text-center font-bold text-2xl  mt-2">
           <h1>Add new folder</h1>
         </div>
         <hr />
-        <div className="min-w-[25rem] h-full my-8 max-sm:min-w-full max-sm:p-0">
-          <p className="text-lg mb-2">Folder Name:</p>
+        <div className="min-w-[25rem] h-full my-8 max-sm:min-w-full max-sm:p-0 z-50">
           <CustomInput
+            label="Folder Name"
             value={folderData.name.value}
             setValue={(value) =>
               setFolderData({
@@ -97,10 +97,9 @@ export function AddFolderModal({
           </div>
           {isPrivate ? (
             <>
-              <p className="text-lg mb-2">Folder Password:</p>
-
               <CustomInput
                 type="password"
+                label="Folder Password"
                 value={
                   folderData.password.value ? folderData.password.value : ""
                 }

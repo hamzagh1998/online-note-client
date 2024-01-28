@@ -15,6 +15,7 @@ import { useCreateFolder } from "./hooks/use-create-folder";
 
 import { FolderData, FolderDataResponse } from "./types";
 import { useGetFolderData } from "./hooks/use-get-folder-data";
+import { FolderContentComponent } from "./components/folder-content.component";
 
 export function FilePage() {
   const userProfile = useSelector((store: RootState) => store.profile);
@@ -43,11 +44,13 @@ export function FilePage() {
     onGetFolderData(setFolderInfo);
   }, [currentFolder]);
 
+  console.log(folderInfo);
+
   return (
     <div className="h-screen overflow-x-hidden">
       <HeaderComponent />
       {/* content */}
-      <section className="px-14 py-7 max-sm:p-3">
+      <section className="h-full px-14 py-7 max-sm:p-3">
         {currentFolder.parentDirectory ? (
           <div className="flex justify-start items-center gap-6">
             <div className="text-2xl text-skin-muted cursor-pointer hover:text-skin-base">
@@ -75,6 +78,11 @@ export function FilePage() {
             isLoading={isLoading}
             onAddFolder={onAddFolder}
           />
+        ) : null}
+        {folderInfo ? (
+          folderInfo.children.length ? (
+            <FolderContentComponent items={folderInfo.children} />
+          ) : null
         ) : null}
       </section>
       {error ? <ToastComponent type="error" message={error} /> : null}

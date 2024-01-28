@@ -1,3 +1,5 @@
+import { GenericIem } from "../types";
+
 export type FolderData = {
   name: {
     value: string;
@@ -10,7 +12,7 @@ export type FolderData = {
 };
 
 export type FolderDataResponse = {
-  children: Array<object>;
+  children: Array<GenericIem>;
   folderName: string;
   id: string;
   parentDirectory: string | null;

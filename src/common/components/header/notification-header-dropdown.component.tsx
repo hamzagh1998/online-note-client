@@ -32,8 +32,8 @@ export function NotificationHeaderDropdownComponent({
         <div className="h-[1px] w-full rounded-full bg-gradient-to-r from-gray-500 to-gray-700 my-4 "></div>
         {notifications.map((notification) => (
           <div
+            key={notification.content}
             className="bg-emerald-100 p-1 mb-1 rounded-lg"
-            key={notification.id}
           >
             <div className="flex justify-start items-center gap-2">
               <img

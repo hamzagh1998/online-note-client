@@ -26,3 +26,14 @@ export type createFolderRequest = {
   password: string | null;
   parentDirectory: string;
 };
+
+export type GenericIem = {
+  _id: string;
+  itemId: string;
+  name: string;
+  owner: string;
+  parentDirectory: string;
+  type: "folder" | "note" | "file";
+  isPrivate: boolean;
+  isFavorite: boolean;
+};
