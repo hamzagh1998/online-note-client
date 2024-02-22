@@ -6,6 +6,7 @@ import { SwitchComponent } from "../../../../../common/components/switch/switch.
 import { createFolderRequest } from "../../types";
 
 import { FolderData } from "../types";
+import { SmallSpinnerIndicatorsComponent } from "../../../../../common/components/activities-indicators/spinner-indicators.component";
 
 type Props = {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -69,7 +70,7 @@ export function AddFolderModal({
 
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center backdrop-filter backdrop-blur-md z-50">
-      <div className="flex flex-col py-10 px-16 w-fit h-fit rounded-md bg-skin-fill-secondary shadow-lg max-sm:h-full max-sm:w-full">
+      <div className="flex flex-col py-10 px-16 w-fit h-fit rounded-md bg-skin-fill-secondary shadow-lg max-sm:w-[95%]">
         <div className="inline-block text-center font-bold text-2xl  mt-2">
           <h1>Add new folder</h1>
         </div>
@@ -135,7 +136,7 @@ export function AddFolderModal({
             className="flex justify-center items-center w-36 h-11 m-2 border-none rounded-md cursor-pointer text-white bg-emerald-500 hover:bg-emerald-600"
             onClick={onCreate}
           >
-            {isLoading ? "Loading" : "Create"}
+            {isLoading ? <SmallSpinnerIndicatorsComponent /> : "Create"}
           </button>
         </div>
       </div>

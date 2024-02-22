@@ -6,9 +6,13 @@ import { IoDocuments } from "react-icons/io5";
 
 type Props = {
   setIsFolderModalVisisble: React.Dispatch<React.SetStateAction<boolean>>;
+  uploadFile: (file: File | null) => void;
 };
 
-export function FloatingButtonComponent({ setIsFolderModalVisisble }: Props) {
+export function FloatingButtonComponent({
+  setIsFolderModalVisisble,
+  uploadFile,
+}: Props) {
   const [isExpanded, setExpanded] = useState(false);
 
   const toggleExpansion = () => {
@@ -18,22 +22,30 @@ export function FloatingButtonComponent({ setIsFolderModalVisisble }: Props) {
   return (
     <div className="fixed bottom-8 right-8 z-50 max-sm:right-4 max-sm:bottom-4">
       {isExpanded && (
-        <div
-          className="flex flex-col items-center justify-center space-y-2 mb-4"
-          onClick={() => {
-            setExpanded(false);
-            setIsFolderModalVisisble(true);
-          }}
-        >
-          <button className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500">
+        <div className="flex flex-col items-center justify-center space-y-2 mb-4">
+          <button
+            className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500"
+            onClick={() => {
+              setExpanded(false);
+              setIsFolderModalVisisble(true);
+            }}
+          >
             <FaFolder size={26} />
           </button>
           <button className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500">
             <FaStickyNote size={26} />
           </button>
-          <button className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500">
+          <label className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500 cursor-pointer">
+            <input
+              type="file"
+              accept="*"
+              onChange={(e) => {
+                uploadFile(e.target.files ? e.target.files[0] : null);
+              }}
+              style={{ display: "none" }}
+            />
             <IoDocuments size={28} />
-          </button>
+          </label>
         </div>
       )}
       <button

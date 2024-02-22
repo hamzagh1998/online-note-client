@@ -1,18 +1,24 @@
+import { useState } from "react";
 import { FaFolderMinus, FaStar } from "react-icons/fa6";
 import { CiMenuKebab, CiStar } from "react-icons/ci";
 import { IoIosInformationCircle, IoMdLock } from "react-icons/io";
-
-import { GenericIem } from "../../types";
 import { MdModeEdit } from "react-icons/md";
 import { FaShareAlt, FaTrashAlt } from "react-icons/fa";
-import { useState } from "react";
+
+import { useDeleteFolder } from "../hooks/use-delete-folder";
+
+import { GenericIem } from "../../types";
+import { ToastComponent } from "../../../../../common/components/toast/toast.component";
+import { SpinnerIndicatorsComponent } from "../../../../../common/components/activities-indicators/spinner-indicators.component";
 
 function ItemsList({
   item,
 }: {
-  item: GenericIem | undefined;
+  item: GenericIem;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { error, isLoading: isDeleteLoading, onDelete } = useDeleteFolder();
+
   return (
     <div className="flex flex-col justify-around items-center bg-skin-fill-primary rounded-md shadow-md w-32 h-fit px-4 py-2">
       <div className="flex justify-between items-center w-full font-bold hover:text-skin-accent cursor-pointer">
@@ -32,10 +38,14 @@ function ItemsList({
         Edit
         <MdModeEdit />
       </div>
-      <div className="flex justify-between items-center w-full font-bold hover:text-skin-error cursor-pointer">
+      <div
+        className="flex justify-between items-center w-full font-bold hover:text-skin-error cursor-pointer"
+        onClick={() => onDelete(item._id)}
+      >
         Delete
-        <FaTrashAlt />
+        {isDeleteLoading ? <SpinnerIndicatorsComponent /> : <FaTrashAlt />}
       </div>
+      {error ? <ToastComponent type="error" message={error} /> : null}
     </div>
   );
 }
@@ -47,10 +57,7 @@ export function FolderContentComponent({ items }: { items: GenericIem[] }) {
   return (
     <section
       className="flex flex-wrap justify-center items-center gap-8 w-full h-full"
-      onClick={(e) => {
-        e.stopPropagation();
-        setShowItelList(false);
-      }}
+      onClick={() => setShowItelList(false)}
     >
       {items.map((item) => (
         <div

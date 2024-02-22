@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import { FilePage } from "../features/notes/pages/folder/folder.page";
-import { NoteDetail } from "../features/notes/pages/note-detail/note-detail";
+import { NoteDetail } from "../features/notes/pages/note-detail/note-detail.page";
 import { CrudNotePage } from "../features/notes/pages/crud-note/crud-note.page";
 import { ConfirmEmailPage } from "../features/notes/pages/confirm-email/confirm-email.page";
 
