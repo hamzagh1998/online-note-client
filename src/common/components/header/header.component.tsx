@@ -15,15 +15,15 @@ import { NotificationHeaderDropdownComponent } from "./notification-header-dropd
 import {
   useLazyInfoQuery,
   useNotificationMutation,
-} from "../../../features/notes/slices/api/profile/profile.service";
+} from "../../../features/content-management/slices/api/profile/profile.service";
 
-import { setUserProfile } from "../../../features/notes/slices/profile.slice";
+import { setUserProfile } from "../../../features/content-management/slices/profile.slice";
 
 import { Response } from "../../types";
 
 import logo from "../../../assets/logo-icon.png";
 import { ToastComponent } from "../toast/toast.component";
-import { ProfileResponse } from "../../../features/notes/pages/types";
+import { ProfileResponse } from "../../../features/content-management/pages/types";
 
 export type User = {
   firstName: null | string;

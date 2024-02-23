@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  getMetadata,
-} from "firebase/storage";
+
 import { MdArrowBack } from "react-icons/md";
 import { FaFolderOpen } from "react-icons/fa6";
-
-import { storage } from "../../../../libs/firebase";
 
 import { RootState } from "../../../../redux/store";
 
@@ -21,20 +14,32 @@ import { ToastComponent } from "../../../../common/components/toast/toast.compon
 
 import { useCreateFolder } from "./hooks/use-create-folder";
 
-import { FolderData, FolderDataResponse } from "./types";
 import { useGetFolderData } from "./hooks/use-get-folder-data";
 import { FolderContentComponent } from "./components/folder-content.component";
+import { useUploadFile } from "./hooks/use-upload-file";
 
-export function FilePage() {
+import { FolderData } from "./types";
+
+import { FolderDataResponse } from "../../slices/api/content/api.types";
+
+export function CurrentContentPage() {
   const userProfile = useSelector((store: RootState) => store.profile);
   const userData = useSelector((store: RootState) => store.auth.userData);
+  const { currentFolder } = useSelector((store: RootState) => store.profile);
 
+  // folder custom hooks
   const { data, onAddFolder, isLoading, error } = useCreateFolder();
   const { onGetFolderData, error: error2 } = useGetFolderData(
     userProfile.currentFolder.id
   );
 
-  const { currentFolder } = useSelector((store: RootState) => store.profile);
+  // file custom hooks
+  const {
+    success,
+    onUploadFile,
+    isLoading: isUploadFileLoading,
+    error: fileError,
+  } = useUploadFile();
 
   const [isFolderModalVisisble, setIsFolderModalVisisble] = useState(false);
 
@@ -60,22 +65,8 @@ export function FilePage() {
     }
 
     try {
-      const fileRef = ref(storage, `${userData?.email}/${file.name}`);
-      await uploadBytes(fileRef, file);
-      // Get the file metadata to retrieve the size
-      const metadata = await getMetadata(fileRef);
-      const fileSizeBytes = metadata.size;
-      const fileSizeMB = fileSizeBytes / (1024 * 1024); // Convert file size from bytes to megabytes: 1 MB = 1024 * 1024 bytes
-
-      // Get the download URL for the file
-      const url = await getDownloadURL(fileRef);
-
-      // Extract file extension from the file name
-      const fileName = metadata.name;
-      const fileExtension = fileName.split(".").pop();
-
-      // Get the file type from the content type
-      const fileType = metadata.contentType;
+      await onUploadFile(file, userData?.email || "Unknown", currentFolder.id);
+      setIsFolderModalVisisble(false);
     } catch (error) {
       setFileError("Failed to upload file. Please try again later!");
     }
@@ -90,6 +81,8 @@ export function FilePage() {
     if (!data || !folderData) return;
     setFolderInfo(data as FolderDataResponse);
   }, [data, folderData]);
+
+  console.log(success);
 
   return (
     <div className="h-screen overflow-x-hidden">
@@ -111,6 +104,7 @@ export function FilePage() {
           <FloatingButtonComponent
             setIsFolderModalVisisble={setIsFolderModalVisisble}
             uploadFile={uploadFile}
+            isUploadFileLoading={isUploadFileLoading}
           />
         ) : null}
         {isFolderModalVisisble ? (
@@ -134,6 +128,10 @@ export function FilePage() {
       {error ? <ToastComponent type="error" message={error} /> : null}
       {error2 ? <ToastComponent type="error" message={error2} /> : null}
       {errorFile ? <ToastComponent type="error" message={errorFile} /> : null}
+      {fileError ? <ToastComponent type="error" message={fileError} /> : null}
+      {success ? (
+        <ToastComponent type="success" message="File uploaded successfully!" />
+      ) : null}
     </div>
   );
 }

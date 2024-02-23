@@ -6,7 +6,7 @@ import { AuthState, authSlice } from "../features/auth/slices/auth.slice";
 import {
   ProfileState,
   profileSlice,
-} from "../features/notes/slices/profile.slice";
+} from "../features/content-management/slices/profile.slice";
 
 export type RootState = {
   auth: AuthState;

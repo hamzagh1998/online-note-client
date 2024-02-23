@@ -9,7 +9,7 @@ import { MdDarkMode } from "react-icons/md";
 import { IoFlagSharp, IoSunny } from "react-icons/io5";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 
-import { setUserProfile } from "../../../features/notes/slices/profile.slice";
+import { setUserProfile } from "../../../features/content-management/slices/profile.slice";
 
 import { RootState } from "../../../redux/store";
 

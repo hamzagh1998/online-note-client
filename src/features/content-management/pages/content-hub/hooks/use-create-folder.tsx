@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-import { useCreateFolderMutation } from "../../../slices/api/folder/folder.service";
+import { useCreateFolderMutation } from "../../../slices/api/content/folder.service";
 
 import { Response } from "../../../../../common/types";
-
-import { createFolderRequest } from "../../types";
-import { FolderDataResponse } from "../types";
+import {
+  FolderDataResponse,
+  createFolderRequest,
+} from "../../../slices/api/content/api.types";
 
 export function useCreateFolder() {
   const [createFolder] = useCreateFolderMutation();

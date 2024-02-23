@@ -35,4 +35,5 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRetry,
   endpoints: () => ({}), // Add your endpoints here
+  keepUnusedDataFor: 10000, // Timeout in milliseconds (e.g., 10 seconds)
 });

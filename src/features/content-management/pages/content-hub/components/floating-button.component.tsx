@@ -3,13 +3,16 @@ import { FaFolder } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { FaStickyNote } from "react-icons/fa";
 import { IoDocuments } from "react-icons/io5";
+import { PiSpinnerGapBold } from "react-icons/pi";
 
 type Props = {
+  isUploadFileLoading: boolean;
   setIsFolderModalVisisble: React.Dispatch<React.SetStateAction<boolean>>;
   uploadFile: (file: File | null) => void;
 };
 
 export function FloatingButtonComponent({
+  isUploadFileLoading,
   setIsFolderModalVisisble,
   uploadFile,
 }: Props) {
@@ -40,11 +43,19 @@ export function FloatingButtonComponent({
               type="file"
               accept="*"
               onChange={(e) => {
-                uploadFile(e.target.files ? e.target.files[0] : null);
+                !isUploadFileLoading
+                  ? uploadFile(e.target.files ? e.target.files[0] : null)
+                  : null;
               }}
               style={{ display: "none" }}
             />
-            <IoDocuments size={28} />
+            {isUploadFileLoading ? (
+              <div className="animate-spin">
+                <PiSpinnerGapBold size={23} />
+              </div>
+            ) : (
+              <IoDocuments size={28} />
+            )}
           </label>
         </div>
       )}

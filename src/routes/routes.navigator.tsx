@@ -4,10 +4,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import { setUserData } from "../features/auth/slices/auth.slice";
-import { setUserProfile } from "../features/notes/slices/profile.slice";
+import { setUserProfile } from "../features/content-management/slices/profile.slice";
 
 import { useLazyAuthQuery } from "../features/auth/slices/api/auth.service";
-import { useLazyInfoQuery } from "../features/notes/slices/api/profile/profile.service";
+import { useLazyInfoQuery } from "../features/content-management/slices/api/profile/profile.service";
 
 import { auth } from "../libs/firebase";
 
@@ -21,7 +21,7 @@ import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-names";
 
 import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
 import { AuthResponse } from "../features/auth/pages/types";
-import { ProfileResponse } from "../features/notes/pages/types";
+import { ProfileResponse } from "../features/content-management/pages/types";
 
 export function RoutesNavigator() {
   const location = useLocation();

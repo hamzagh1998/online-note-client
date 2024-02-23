@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useLazyFolderDataQuery } from "../../../slices/api/folder/folder.service";
+import { useLazyFolderDataQuery } from "../../../slices/api/content/folder.service";
 
 import { Response } from "../../../../../common/types";
 import { FolderDataResponse } from "../types";

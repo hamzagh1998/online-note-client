@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useLazyDeleteFolderQuery } from "../../../slices/api/folder/folder.service";
+import { useLazyDeleteFolderQuery } from "../../../slices/api/content/folder.service";
 
 export function useDeleteFolder() {
   const [deleteFolder] = useLazyDeleteFolderQuery();

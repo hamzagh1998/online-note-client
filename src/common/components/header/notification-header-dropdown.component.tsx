@@ -1,6 +1,6 @@
 import { FaInbox, FaRegEye } from "react-icons/fa6";
 
-import { Notification } from "../../../features/notes/slices/profile.slice";
+import { Notification } from "../../../features/content-management/slices/profile.slice";
 
 import logo from "../../../assets/logo-icon.png";
 
