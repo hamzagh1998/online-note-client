@@ -8,7 +8,7 @@ import { auth } from "../../../../../libs/firebase";
 
 import { CustomInput } from "../../../../../common/components/inputs/custom-input";
 
-import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-paths";
 import { SmallSpinnerIndicatorsComponent } from "../../../../../common/components/activities-indicators/spinner-indicators.component";
 import { ErrorBannerComponent } from "../../../../../common/components/banners/error-banner.component";
 import { SuccessBannerComponent } from "../../../../../common/components/banners/success-banner.component";
@@ -29,7 +29,7 @@ export function ResetPasswordFormComponent() {
 
   const emailSchema = object({
     email: string()
-      .email("Pls enter a valid email address!")
+      .email("Please enter a valid email address!")
       .required("Email is required!"),
   });
 

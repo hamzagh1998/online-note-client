@@ -7,7 +7,7 @@ import { auth } from "../../../../libs/firebase";
 
 import { ErrorBannerComponent } from "../../../../common/components/banners/error-banner.component";
 
-import { MAIN_REOTES } from "../../../../routes/_routes-names";
+import { MAIN_REOTES } from "../../../../routes/_routes-paths";
 
 import emailLogo from "../../../../assets/email.png";
 

@@ -10,6 +10,7 @@ export type GenericIem = {
   owner: string;
   parentDirectory: string;
   type: "folder" | "note" | "file";
+  fileType?: string;
   isPrivate: boolean;
   isFavorite: boolean;
 };

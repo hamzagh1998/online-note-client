@@ -1,4 +1,4 @@
 export const fileEndpoints = {
-  UPLOAD_FILE: "folder/upload-file",
-  DELETE_FILE: "folder/delete-file",
+  UPLOAD_FILE: "file/upload-file",
+  DELETE_FILE: "file/delete-file",
 };

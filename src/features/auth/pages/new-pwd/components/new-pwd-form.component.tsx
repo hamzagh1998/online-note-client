@@ -4,7 +4,7 @@ import { ValidationError, object, string } from "yup";
 import { BsEye } from "react-icons/bs";
 import { PiEyeClosedLight } from "react-icons/pi";
 
-import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-paths";
 import { useFirebaseNewPwd } from "../hooks/use-firebase-new-pwd";
 
 import { useToggle } from "../../../../../common/hooks/use-toggle";

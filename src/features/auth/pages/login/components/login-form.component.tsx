@@ -15,7 +15,7 @@ import { useFirebaseGmailAuth } from "../../hooks/use-firebase-gmail-auth";
 
 import { checkRequiredFields } from "../../../../../utils/check-required-fields";
 
-import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-paths";
 
 type FormValues = {
   email: {

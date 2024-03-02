@@ -67,6 +67,7 @@ export function CurrentContentPage() {
     try {
       await onUploadFile(file, userData?.email || "Unknown", currentFolder.id);
       setIsFolderModalVisisble(false);
+      onGetFolderData(setFolderInfo);
     } catch (error) {
       setFileError("Failed to upload file. Please try again later!");
     }
@@ -81,8 +82,6 @@ export function CurrentContentPage() {
     if (!data || !folderData) return;
     setFolderInfo(data as FolderDataResponse);
   }, [data, folderData]);
-
-  console.log(success);
 
   return (
     <div className="h-screen overflow-x-hidden">

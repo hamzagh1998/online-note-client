@@ -55,6 +55,7 @@ export function useUploadToFirebaseStorage() {
         fileSizeMB,
         fileType,
       });
+      return url;
     } catch (error) {
       setFirebasErrorError("Failed to upload file. Please try again later!");
     }

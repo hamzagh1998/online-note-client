@@ -33,7 +33,7 @@ export function AddFolderModal({
     if (!folderData.name.value.length)
       return setFolderData({
         ...folderData,
-        name: { ...folderData.name, error: "Pls enter the folder name!" },
+        name: { ...folderData.name, error: "Please enter the folder name!" },
       });
     if (isPrivate) {
       if (!folderData.password.value) {

@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaFolder } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { FaStickyNote } from "react-icons/fa";
 import { IoDocuments } from "react-icons/io5";
 import { PiSpinnerGapBold } from "react-icons/pi";
+import { MAIN_REOTES } from "../../../../../routes/_routes-paths";
 
 type Props = {
   isUploadFileLoading: boolean;
@@ -16,6 +18,8 @@ export function FloatingButtonComponent({
   setIsFolderModalVisisble,
   uploadFile,
 }: Props) {
+  const navigate = useNavigate();
+
   const [isExpanded, setExpanded] = useState(false);
 
   const toggleExpansion = () => {
@@ -36,19 +40,22 @@ export function FloatingButtonComponent({
             <FaFolder size={26} />
           </button>
           <button className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500">
-            <FaStickyNote size={26} />
+            <FaStickyNote
+              size={26}
+              onClick={() => navigate(`/main${MAIN_REOTES.NOTE_CRUD}`)}
+            />
           </button>
           <label className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500 cursor-pointer">
-            <input
-              type="file"
-              accept="*"
-              onChange={(e) => {
-                !isUploadFileLoading
-                  ? uploadFile(e.target.files ? e.target.files[0] : null)
-                  : null;
-              }}
-              style={{ display: "none" }}
-            />
+            {isUploadFileLoading ? null : (
+              <input
+                type="file"
+                accept="*"
+                onChange={(e) => {
+                  uploadFile(e.target.files ? e.target.files[0] : null);
+                }}
+                style={{ display: "none" }}
+              />
+            )}
             {isUploadFileLoading ? (
               <div className="animate-spin">
                 <PiSpinnerGapBold size={23} />

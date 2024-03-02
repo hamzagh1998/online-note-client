@@ -11,7 +11,7 @@ import { CustomInput } from "../../../../../common/components/inputs/custom-inpu
 import { GoogleButtonComponent } from "../../../../../common/components/buttons/google-button.component";
 import { useToggle } from "../../../../../common/hooks/use-toggle";
 
-import { AUTH_ROUTES } from "../../../../../routes/_routes-names";
+import { AUTH_ROUTES } from "../../../../../routes/_routes-paths";
 import { ErrorBannerComponent } from "../../../../../common/components/banners/error-banner.component";
 
 import { checkRequiredFields } from "../../../../../utils/check-required-fields";

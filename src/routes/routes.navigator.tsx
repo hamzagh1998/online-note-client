@@ -17,7 +17,7 @@ import { NotFoundPage } from "../features/auth/pages/not-found.page";
 
 import { RootState } from "../redux/store";
 
-import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-names";
+import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-paths";
 
 import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
 import { AuthResponse } from "../features/auth/pages/types";

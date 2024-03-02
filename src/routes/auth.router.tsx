@@ -5,7 +5,7 @@ import { RegisterPage } from "../features/auth/pages/register/register.page";
 import { ResetPasswordPage } from "../features/auth/pages/reset-pwd/reset-pwd.page";
 import { NewPasswordPage } from "../features/auth/pages/new-pwd/new-pwd.page";
 
-import { AUTH_ROUTES } from "./_routes-names";
+import { AUTH_ROUTES } from "./_routes-paths";
 
 export function AuthRouter() {
   return (
