@@ -21,3 +21,10 @@ export type FolderDataResponse = {
   id: string;
   parentDirectory: string | null;
 };
+
+export type NoteRequest = {
+  title: string;
+  content: string;
+  parentDirectory: string;
+  ressourceLinks: Array<{ url: string; fileSizeMB: number }>;
+};

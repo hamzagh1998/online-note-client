@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useUploadFileMutation } from "../../../slices/api/content/file.service";
 
 import { Response } from "../../../../../common/types";
-import { useUploadToFirebaseStorage } from "./use-upload-to-firebase-storage";
+import { useUploadToFirebaseStorage } from "../../hooks/use-upload-to-firebase-storage";
 
 export function useUploadFile() {
   const [uploadFile] = useUploadFileMutation();

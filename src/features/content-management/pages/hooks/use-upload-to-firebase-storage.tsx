@@ -6,8 +6,8 @@ import {
   uploadBytes,
 } from "firebase/storage";
 
-import { UploadFileRequest } from "../../../slices/api/content/api.types";
-import { storage } from "../../../../../libs/firebase";
+import { UploadFileRequest } from "../../slices/api/content/api.types";
+import { storage } from "../../../../libs/firebase";
 
 export function useUploadToFirebaseStorage() {
   const [payload, setPayload] = useState<UploadFileRequest | null>(null);

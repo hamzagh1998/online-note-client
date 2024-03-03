@@ -14,3 +14,16 @@ export type GenericIem = {
   isPrivate: boolean;
   isFavorite: boolean;
 };
+
+export type Note = {
+  title: {
+    value: string;
+    placeholder: string;
+    error: null | string;
+  };
+  content: {
+    value: string;
+    placeholder: string;
+    error: null | string;
+  };
+};

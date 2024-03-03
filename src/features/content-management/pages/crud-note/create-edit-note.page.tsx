@@ -1,15 +1,18 @@
 import { useState, useEffect, useMemo } from "react";
 import { FroalaComponent } from "./components/froala-editor.component";
 import { CustomInput } from "../../../../common/components/inputs/custom-input";
+import { Note } from "../types";
 
 export function CreateEditNotePage() {
   const [pageHeight, setPageHeight] = useState(window.innerHeight);
 
-  const [note, setNote] = useState({
+  const [note, setNote] = useState<Note>({
     title: { value: "", placeholder: "Enter the note title", error: null },
     content: { value: "", placeholder: "Enter the note content", error: null },
   });
-  const [filesLinks, setFilesLinks] = useState<string[]>([]);
+  const [files, setFiles] = useState<
+    Array<{ url: string; fileSizeMB: number }>
+  >([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,7 +28,7 @@ export function CreateEditNotePage() {
 
   const editorHeight = useMemo(
     () =>
-      pageHeight > 600 ? (pageHeight * 75) / 100 : (pageHeight * 50) / 100,
+      pageHeight > 600 ? (pageHeight * 70) / 100 : (pageHeight * 45) / 100,
     [pageHeight]
   );
 
@@ -52,8 +55,9 @@ export function CreateEditNotePage() {
         <FroalaComponent
           height={editorHeight}
           note={note}
+          files={files}
           setNote={setNote}
-          setFilesLinks={setFilesLinks}
+          setFiles={setFiles}
         />
       </div>
     </div>
