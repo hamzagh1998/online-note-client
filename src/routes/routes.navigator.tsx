@@ -21,7 +21,6 @@ import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-paths";
 
 import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
 import { AuthResponse } from "../features/auth/pages/types";
-import { ProfileResponse } from "../features/content-management/pages/types";
 
 export function RoutesNavigator() {
   const location = useLocation();
@@ -77,7 +76,7 @@ export function RoutesNavigator() {
       const res = await getProfileData({});
 
       if (!res.data.error) {
-        const data: ProfileResponse = res.data.detail;
+        const data = res.data.detail;
         dispatch(
           setUserProfile({
             ...data,
