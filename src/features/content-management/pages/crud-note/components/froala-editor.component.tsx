@@ -102,7 +102,7 @@ export function FroalaComponent({
       });
     const payload: NoteRequest = {
       title: note.title.value,
-      content: note.title.value,
+      content: note.content.value,
       parentDirectory: currentFolder.id,
       ressourceLinks: files,
     };

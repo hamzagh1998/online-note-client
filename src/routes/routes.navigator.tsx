@@ -17,7 +17,7 @@ import { NotFoundPage } from "../features/auth/pages/not-found.page";
 
 import { RootState } from "../redux/store";
 
-import { AUTH_ROUTES, MAIN_REOTES } from "./_routes-paths";
+import { AUTH_ROUTES, MAIN_ROUTES } from "./_routes-paths";
 
 import { SpinnerIndicatorsComponent } from "../common/components/activities-indicators/spinner-indicators.component";
 import { AuthResponse } from "../features/auth/pages/types";
@@ -120,10 +120,10 @@ export function RoutesNavigator() {
     authDomain + AUTH_ROUTES.NEW_PWD,
   ];
   const mainRoutes = [
-    mainDomain + MAIN_REOTES.CONFIRM_EMAIL,
-    mainDomain + MAIN_REOTES.NOTES,
-    mainDomain + MAIN_REOTES.NOTE_DETAIL,
-    mainDomain + MAIN_REOTES.NOTE_CRUD,
+    mainDomain + MAIN_ROUTES.CONFIRM_EMAIL,
+    mainDomain + MAIN_ROUTES.NOTES,
+    mainDomain + MAIN_ROUTES.NOTE_DETAIL,
+    mainDomain + MAIN_ROUTES.NOTE_CRUD,
   ];
 
   const url = new URL(window.location.href);

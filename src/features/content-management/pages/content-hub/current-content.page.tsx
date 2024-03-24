@@ -21,6 +21,7 @@ import { useUploadFile } from "./hooks/use-upload-file";
 import { FolderData } from "./types";
 
 import { FolderDataResponse } from "../../slices/api/content/api.types";
+import { SpinnerIndicatorsComponent } from "../../../../common/components/activities-indicators/spinner-indicators.component";
 
 export function CurrentContentPage() {
   const userProfile = useSelector((store: RootState) => store.profile);
@@ -122,7 +123,9 @@ export function CurrentContentPage() {
           folderInfo.children.length ? (
             <FolderContentComponent items={folderInfo.children} />
           ) : null
-        ) : null}
+        ) : (
+          <SpinnerIndicatorsComponent />
+        )}
       </section>
       {error ? <ToastComponent type="error" message={error} /> : null}
       {error2 ? <ToastComponent type="error" message={error2} /> : null}

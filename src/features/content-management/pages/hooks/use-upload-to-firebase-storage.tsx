@@ -38,7 +38,7 @@ export function useUploadToFirebaseStorage() {
       const fileSizeMB = fileSizeBytes / (1024 * 1024); // Convert file size from bytes to megabytes: 1 MB = 1024 * 1024 bytes
 
       // Get the download URL for the file
-      const url = await getDownloadURL(fileRef);
+      const url = await getDownloadURL(fileRef);      
 
       // Extract file extension from the file name
       const fileName = metadata.name;

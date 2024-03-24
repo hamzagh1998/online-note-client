@@ -32,8 +32,6 @@ export function CreateEditNotePage() {
     [pageHeight]
   );
 
-  console.log(note);
-
   return (
     <div className="w-screen h-screen overflow-hidden">
       <div className="w-full h-full py-12 px-10 max-sm:p-0">

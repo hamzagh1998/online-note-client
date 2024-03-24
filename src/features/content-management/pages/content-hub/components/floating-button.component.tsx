@@ -5,7 +5,7 @@ import { IoMdAdd } from "react-icons/io";
 import { FaStickyNote } from "react-icons/fa";
 import { IoDocuments } from "react-icons/io5";
 import { PiSpinnerGapBold } from "react-icons/pi";
-import { MAIN_REOTES } from "../../../../../routes/_routes-paths";
+import { MAIN_ROUTES } from "../../../../../routes/_routes-paths";
 
 type Props = {
   isUploadFileLoading: boolean;
@@ -42,7 +42,7 @@ export function FloatingButtonComponent({
           <button className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500">
             <FaStickyNote
               size={26}
-              onClick={() => navigate(`/main${MAIN_REOTES.NOTE_CRUD}`)}
+              onClick={() => navigate(`/main${MAIN_ROUTES.NOTE_CRUD}`)}
             />
           </button>
           <label className="flex justify-center items-center bg-blue-400 w-14 h-14 text-white rounded-full p-4 focus:outline-none hover:bg-blue-500 cursor-pointer">

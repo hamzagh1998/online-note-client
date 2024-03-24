@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaFolderMinus,
   FaRegFile,
@@ -14,7 +15,8 @@ import {
 import { CiMenuKebab, CiStar } from "react-icons/ci";
 import { IoIosInformationCircle, IoMdLock } from "react-icons/io";
 import { MdModeEdit } from "react-icons/md";
-import { FaShareAlt, FaTrashAlt } from "react-icons/fa";
+import { FaShareAlt, FaStickyNote, FaTrashAlt } from "react-icons/fa";
+import { PiFileJsThin } from "react-icons/pi";
 
 import { useDeleteFolder } from "../hooks/use-delete-folder";
 
@@ -29,7 +31,7 @@ import {
   BsFiletypeJson,
   BsFiletypeXml,
 } from "react-icons/bs";
-import { PiFileJsThin } from "react-icons/pi";
+import { MAIN_ROUTES } from "../../../../../routes/_routes-paths";
 
 function ItemsList({
   item,
@@ -87,6 +89,8 @@ function ItemContent({
   setSelectedItem,
   setShowItelList,
 }: ItemContentProps) {
+  const navigate = useNavigate();
+
   const getFileIcon = (fileType: string) => {
     if (fileType.includes("video")) {
       return <FaRegFileVideo className="text-skin-accent" size={32} />;
@@ -135,6 +139,12 @@ function ItemContent({
     }
   };
 
+  const onSeeDetail = (content: GenericIem) => {
+    if (content.type === "note") {
+      navigate(`/main${MAIN_ROUTES.NOTE_DETAIL}/${content._id}`);
+    }
+  };
+
   return (
     <div className="relative w-[20%] h-56 shadow-md rounded-md bg-skin-fill-secondary p-8 max-md:w-[40%] max-sm:w-full max-sm:h-48 hover:opacity-80">
       <div className="flex flex-col justify-between w-full h-full">
@@ -145,8 +155,13 @@ function ItemContent({
             item.fileType ? (
               getFileIcon(item.fileType)
             ) : null
-          ) : null}
-          <p className="font-bold text-lg cursor-pointer hover:underline hover:text-skin-muted">
+          ) : (
+            <FaStickyNote className="text-skin-accent" size={32} />
+          )}
+          <p
+            className="font-bold text-lg cursor-pointer hover:underline hover:text-skin-muted"
+            onClick={() => onSeeDetail(item)}
+          >
             {item.name.length > 15 ? item.name.slice(0, 15) + "..." : item.name}
           </p>
           {item.isPrivate ? <IoMdLock size={24} /> : null}

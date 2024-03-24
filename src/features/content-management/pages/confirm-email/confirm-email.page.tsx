@@ -7,7 +7,7 @@ import { auth } from "../../../../libs/firebase";
 
 import { ErrorBannerComponent } from "../../../../common/components/banners/error-banner.component";
 
-import { MAIN_REOTES } from "../../../../routes/_routes-paths";
+import { MAIN_ROUTES } from "../../../../routes/_routes-paths";
 
 import emailLogo from "../../../../assets/email.png";
 
@@ -37,7 +37,7 @@ export function ConfirmEmailPage() {
     (async () => {
       await handleEmailAction(params.mode, params.oobCode);
       localStorage.removeItem("params");
-      navigate("/main" + MAIN_REOTES.NOTES);
+      navigate("/main" + MAIN_ROUTES.NOTES);
     })();
   }
 

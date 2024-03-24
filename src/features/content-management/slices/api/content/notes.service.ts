@@ -5,18 +5,18 @@ import { notendpoints } from "./note-endpoints";
 
 export const folderApi = api.injectEndpoints({
   endpoints: (build) => ({
+    noteDetail: build.query({
+      query: (noteId: string) => ({
+        url: notendpoints.NOTE_DETAIL + "/" + noteId,
+        method: "GET",
+      }),
+    }),
+
     createNote: build.mutation({
       query: (payload: NoteRequest) => ({
         url: notendpoints.CREATE_NOTE,
         method: "POST",
         body: payload,
-      }),
-    }),
-
-    noteDetail: build.query({
-      query: (noteId: string) => ({
-        url: notendpoints.CREATE_NOTE + "/" + noteId,
-        method: "GET",
       }),
     }),
 
@@ -29,4 +29,8 @@ export const folderApi = api.injectEndpoints({
   }),
 });
 
-export const { useCreateNoteMutation, useLazyDeleteNoteQuery } = folderApi;
+export const {
+  useLazyNoteDetailQuery,
+  useCreateNoteMutation,
+  useLazyDeleteNoteQuery,
+} = folderApi;

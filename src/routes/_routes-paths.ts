@@ -5,9 +5,9 @@ export const AUTH_ROUTES = {
   NEW_PWD: "/new-password",
 };
 
-export const MAIN_REOTES = {
+export const MAIN_ROUTES = {
   CONFIRM_EMAIL: "/confirm-email",
   NOTES: "/folder",
-  NOTE_DETAIL: "/note/:id",
+  NOTE_DETAIL: "/note-detail",
   NOTE_CRUD: "/note-crud",
 };
